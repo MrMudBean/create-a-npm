@@ -6,6 +6,7 @@ export type Dependencies =
   | 'rollup'
   | 'typescript'
   | 'eslint'
+  | 'beautify'
   | 'prettier';
 
 /**  本地储存的配置文件数据  */

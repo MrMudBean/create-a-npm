@@ -1,7 +1,7 @@
 import { PackageJson } from 'a-node-tools';
 import { dataStore } from '../data-store';
+import { commandParameters } from '../data-store/commandParameters';
 import { writeToJsonFile } from '../utils';
-import { commandParameters } from 'src/data-store/commandParameters';
 
 /** 生成 package.json 文件内容  */
 export function packageJson() {
@@ -31,30 +31,54 @@ export function packageJson() {
       b: `rollup --config rollup.config.js${dataStore.bin !== 1 && ts ? ' && tsc -p tsconfig.types.json' : ''}`,
       build: `jja cls rm dist && ${manager.value} run b && ${manager.value} run clean:package`,
       'clean:package': 'node scripts/clean-package-json.js',
-      diff: 'jja pkg --diff=官方',
+      diff: 'jja pkg --diff=淘宝',
       prepublishOnly: 'pjj',
       push: 'gvv',
       'push:version': 'gvv',
-      test: 'jja rm .eg && rollup --config rollup.config.eg.js && node .eg/index.mjs',
+      test: 'jja rm .eg && rollup --config rollup.config.eg.js && node .eg/index.js',
       vjj: 'vjj',
     },
-    license: 'MIT',
     devDependencies: dataStore.buildDevDependencies(),
   };
 
+  const appendPkgInfo = function (
+    // 这里是不安全的，但是涉及到 a-node-tools 包的类型判定
+    // 暂时如此处理
+    this: Record<string, any>,
+    data: Record<string, any>,
+    attr: string = 'scripts',
+  ) {
+    const keys = Object.keys(data);
+    keys.forEach(key => {
+      if (!this[attr]) this[attr] = {};
+      this[attr][key] = data[key];
+    });
+  }.bind(pkgInfo);
+
   if (de.includes('husky') && de.includes('prettier')) {
-    pkgInfo['lint-staged'] = {
-      '*.{js,ts}': ['prettier --write'],
-    };
-    pkgInfo.scripts.prepare = 'husky';
+    appendPkgInfo(
+      {
+        '*.{js,ts}': ['prettier --write'],
+      },
+      'lint-staged',
+    );
+    appendPkgInfo({
+      prepare: 'husky',
+    });
   }
 
   // eslint 脚本
   if (de.includes('eslint'))
-    pkgInfo.scripts['eslint'] = 'jja cls && eslint packages';
-
+    appendPkgInfo({
+      lint: 'jja cls && eslint . --fix',
+    });
+  // prettier 代码文本格式化
   if (de.includes('prettier'))
-    pkgInfo.scripts['prettier'] = 'jja cls && prettier . --write';
+    appendPkgInfo({
+      beautify: 'jja cls && prettier . --write',
+    });
 
-  writeToJsonFile('package.json', pkgInfo);
+  // 通过这种方法移除 description 属性
+  const { description: _, ..._buildPKGInfo } = pkgInfo;
+  writeToJsonFile('package.json', _buildPKGInfo);
 }

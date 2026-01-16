@@ -1,12 +1,18 @@
-/************************************************
- * @Author
- * @Email earthnut.dev@outlook.com
- * @ProjectName create-a-npm
- * @FileName data.ts
- * @CreateDate  周五  08/30/2024
- * @Description  数据中心
+/**
+ * @packageDocumentation
+ * @module @create-a-npm/index
+ * @file index.ts
+ * @description 数据中心
+ * @author MrMudBean <Mr.MudBean@outlook.com>
+ * @license MIT
+ * @copyright 2026 ©️ MrMudBean
+ * @since 2024-08-30 18:44
+ * @version 1.1.0
+ * @lastModified 2026-01-16 21:45
+ *
  * 当配置包名时，后自动创建包的工作路径
- ************************************************/
+ */
+import { enArr } from 'a-js-tools';
 import {
   getDirectoryBy,
   initializeFile,
@@ -14,12 +20,13 @@ import {
   pathJoin,
   readFileToJsonSync,
 } from 'a-node-tools';
-import { DataType } from 'src/types';
-import { originDependencies } from './origin-dependencies';
-import { dog } from 'src/dog';
 import { isUndefined } from 'a-type-of-js';
+import { DataType } from '../types';
+import { dog, dun } from '../utils/dog';
 import { commandParameters } from './commandParameters';
+import { originDependencies } from './origin-dependencies';
 
+export type Dependency = Record<string, string>;
 /** 初始化当前工作文件路径  */
 const [__dirname] = initializeFile();
 
@@ -91,70 +98,109 @@ export const dataStore: DataType = {
   childPkg: false,
   buildDevDependencies() {
     const { dependencies: de } = this.local;
-    const { devDependencies: devPen, dependencies: pen } = this.package;
+    const { devDependencies: devDe } = this.package;
 
     dog('获取的本地的包信息', de);
     dog('获取本地的');
 
-    const result: {
-      [x: string]: string;
-    } = {
-      '@qqi/check-version': devPen['@qqi/check-version'] || '^1.0.2',
-      '@qqi/rollup-external': devPen['@qqi/rollup-external'] || '^1.0.6',
-      '@rollup/plugin-commonjs': devPen['@rollup/plugin-commonjs'] || '^28.0.3',
-      '@rollup/plugin-json': devPen['@rollup/plugin-json'] || '^6.1.0',
-      '@rollup/plugin-node-resolve':
-        devPen['@rollup/plugin-node-resolve'] || '^16.0.1',
-      '@rollup/plugin-terser': devPen['@rollup/plugin-terser'] || '^0.4.4',
-      'a-command': pen['a-command'] || '^2.3.8',
-      'a-node-tools': pen['a-node-tools'] || '^4.2.6',
-      gvv: devPen['gvv'] || '^0.0.7',
-      tslib: devPen['tslib'] || '^2.8.1',
-      jja: devPen['jja'] || '^2.3.8',
-      pjj: devPen['pjj'] || '^1.0.1',
-      vjj: devPen['vjj'] || '^1.0.5',
-      rollup: devPen['rollup'] || '^4.43.0',
-      'rollup-plugin-cleanup': devPen['rollup-plugin-cleanup'] || '^3.2.1',
-      'rollup-plugin-copy': devPen['rollup-plugin-copy'] || '^3.5.0',
-    };
+    const result: Dependency = {};
+    /**
+     * 通过一种很二的方式来添加
+     * @param list 依赖数组
+     */
+    const merge = function (this: Dependency, list: Dependency) {
+      const keys = Object.keys(list);
+      keys.forEach(key => (this[key] = devDe[key] || list[key]));
+    }.bind(result);
+
+    merge({
+      '@eslint/js': '^9.39.2',
+      '@qqi/check-version': '^1.1.0',
+      '@qqi/rollup-external': '^1.1.0',
+      '@rollup/plugin-commonjs': '^29.0.0',
+      '@rollup/plugin-json': '^6.1.0',
+      '@rollup/plugin-node-resolve': '^16.0.3',
+      '@rollup/plugin-terser': '^0.4.4',
+      '@rollup/plugin-typescript': '^12.3.0',
+      gvv: '^1.0.0',
+      jja: '^2.4.0',
+      pjj: '^1.0.5',
+      rollup: '^4.55.1',
+      'rollup-plugin-cleanup': '^3.2.1',
+      'rollup-plugin-copy': '^3.5.0',
+      vjj: '^1.0.12',
+      '@color-pen/static': '^1.1.1',
+      '@qqi/log': '^1.0.0',
+      'a-command': '^3.0.1',
+      'a-js-tools': '^2.0.1',
+      'a-node-tools': '^4.4.2',
+      'a-type-of-js': '^2.0.0',
+      'color-pen': '^3.0.0',
+      'colored-table': '^0.2.0',
+      qqi: '^1.0.0',
+    });
 
     if (de.includes('husky') && de.includes('prettier')) {
-      result['husky'] = devPen['husky'] || '^9.1.7';
-      result['lint-staged'] = devPen['lint-staged'] || '^16.1.0';
+      merge({
+        husky: '^9.1.7',
+        'lint-staged': '^16.2.7',
+      });
     }
 
     if (de.includes('eslint')) {
-      // eslint 核型
-      result['eslint'] = devPen['eslint'] || '^9.28.0';
-      // 注释审视
-      result['eslint-plugin-jsdoc'] =
-        devPen['eslint-plugin-jsdoc'] || '^51.0.1';
-      // 其他需要的两个依赖
-      result['globals'] = devPen['globals'] || '^16.2.0';
-      result['@eslint/js'] = devPen['@eslint/js'] || '^9.28.0';
+      merge({
+        // eslint 核心
+        eslint: '^9.39.2',
+        'eslint-config-prettier': '^10.1.8',
+        // 注释文档审视
+        'eslint-plugin-jsdoc': '^62.0.0',
+        // 其他需要的两个依赖
+        globals: '^17.0.0',
+        '@eslint/js': '^9.39.2',
+        'eslint-plugin-import': '^2.32.0',
+        'eslint-plugin-jsonc': '^2.21.0',
+        'eslint-plugin-unused-imports': '^4.3.0',
+        'eslint-import-resolver-typescript': '^4.4.4',
+      });
 
       // eslint typescript 支持
       if (de.includes('typescript'))
-        result['typescript-eslint'] = devPen['typescript-eslint'] || '^8.34.0';
+        merge({
+          'typescript-eslint': '^8.53.0',
+        });
 
       // eslint prettier 支持
       if (de.includes('prettier'))
-        result['eslint-config-prettier'] =
-          devPen['eslint-config-prettier'] || '^10.1.5';
+        merge({
+          'eslint-config-prettier': '^10.1.8',
+        });
     }
 
     // 如果需要格式化
     if (de.includes('prettier'))
-      result['prettier'] = devPen['prettier'] || '^3.5.3';
+      merge({
+        prettier: '^3.8.0',
+      });
 
     // 如果需要 ts
     if (de.includes('typescript')) {
-      result['@types/node'] = devPen['@types/node'] || '^24.0.1';
-      result['@rollup/plugin-typescript'] =
-        devPen['@rollup/plugin-typescript'] || '^12.1.2';
-      result['typescript'] = devPen['typescript'] || '^5.8.3';
+      merge({
+        '@types/node': '^25.0.9',
+        '@rollup/plugin-node-resolve': '^16.0.3',
+        typescript: '^5.9.3',
+      });
     }
-    dog('构建的依赖图', result);
+    delete result.merge; // 移除工具函数
+    if (dun) {
+      dog('构建的依赖图', result);
+      dog(
+        `构建依赖图（${Object.keys(result).length}）和原版本的 ${Object.keys(devDe).length}`,
+      );
+      dog(
+        '俩者的差集',
+        enArr.symmetricDifference(Object.keys(devDe), Object.keys(result)),
+      );
+    }
     return result;
   },
   commandParameters: commandParameters,

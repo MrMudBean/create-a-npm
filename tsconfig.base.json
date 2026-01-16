@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": ".",
     "jsx": "preserve",
     "strict": true,
     "target": "ESNext",

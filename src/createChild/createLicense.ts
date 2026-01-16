@@ -1,6 +1,6 @@
 import { writeFileSync } from 'node:fs';
-import { dataStore } from 'src/data-store';
-import { licenseText } from 'src/data-store/licenseText';
+import { dataStore } from '../data-store/index';
+import { licenseText } from '../data-store/licenseText';
 
 /**  license  */
 export function createLicense() {

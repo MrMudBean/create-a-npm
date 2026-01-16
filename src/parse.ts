@@ -1,7 +1,7 @@
-import { command } from './command';
 import { commandParameters } from './data-store/commandParameters';
-import { dog } from './dog';
 import { acceptManagerValue } from './types';
+import { command } from './utils/command';
+import { dog } from './utils/dog';
 
 /**  解析参数使用  */
 export function parse() {

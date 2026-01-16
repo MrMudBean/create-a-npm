@@ -1,4 +1,27 @@
-# 构建一个符合花生亻规则的 npm 简单包
+# 构建一个符合泥豆君规则的 npm 简单包
+
+## 1.1.0 (2026-1-16)
+
+- 重写了部分逻辑
+- **`tsconfig.base.json`** ：
+  - 高版本的 `typescript` 建议添加 `"forceConsistentCasingInFileNames": true` 降低在不同设备的性能
+  - 在 `TypeScript 7.0` 将移除 `baseUrl` ，所以使用 `"rootDir": "."` 代替
+  - `tsconfig.type.json` 的 `declarationDir` 不再于 `dist` 下，而是放到了 `dist/es` 下，简化打包后文件结构
+- **"rollup"**
+  - 打包入口由 `./index.{js,ts}` 变成了 `./src/index.{js,ts}`
+  - 打包文件出口调整
+  - 当为 bin 模式，添加 `rollup-rollup-license` 插件
+- **eslint** ：
+  - 生成判定错误，导入信息有误
+  - 规则调整
+- **"package.json"** ：
+  - 更改 `eslint` 的钩子名称 `eslint` ➞ `lint`
+    - 更改 "eslint" 执行添加 `--fix` 参数
+  - 更改 `prettier` 的钩子名称 `prettier` ➞ `beautify`
+- **action** ：
+  - 由于 npm 的验证策略调整，现在不再推荐使用 token 验证，而是在 `https://www.npmjs.com/package/xxxx/access` 配置指定的可推送的 github/gitlab 执行推送 CI/CD 文件的模式，所有对原构建的 "发布.yaml" 文件内容做了调整
+- **index.{js,ts}** ： 入口文件从根移到了 "src/" 下
+- **LICENSE** ： 版权的 `c` 改成了 `©️`
 
 ## v1.0.7 (2025-8-1)
 

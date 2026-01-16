@@ -1,18 +1,23 @@
-/************************************************
- * @Author earthnut
- * @Email earthnut.dev@outlook.com
- * @FileName custom.ts
- * @Date  周三  08/28/2024
- * @Description
- ************************************************/
-import { chooseUserName } from './choose-user-name';
+/**
+ * @packageDocumentation
+ * @module @create-a-npm/custom
+ * @file index.ts
+ * @description 自定义数据
+ * @author MrMudBean <Mr.MudBean@outlook.com>
+ * @license MIT
+ * @copyright 2026 ©️ MrMudBean
+ * @since 2024-08-28 22:26
+ * @version 1.1.0
+ * @lastModified 2026-01-16 22:26
+ */
+import { dog } from '../utils/dog';
+import { askForDependencies } from './ask-for-dependencies';
+import { askForInitDependencies } from './ask-for-init-dependencies';
+import { askForLastConfig } from './ask-for-last-config';
+import { askForWithBin } from './ask-for-bin';
 import { chooseEmail } from './choose-email';
 import { chooseUrl } from './choose-url';
-import { askForLastConfig } from './askForLastConfig';
-import { dog } from 'src/dog';
-import { askForDependencies } from './askForDependencies';
-import { askForInitDependencies } from './askForInitDependencies';
-import { askForWithBin } from './askForWithBin';
+import { chooseUserName } from './choose-user-name';
 
 /**  自定义 */
 export default async function custom(): Promise<void> {

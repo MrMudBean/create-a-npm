@@ -1,11 +1,15 @@
 import { SelectionParamObjectData } from 'a-command';
 import { isBusinessEmptyString } from 'a-type-of-js';
 import { greenPen } from 'color-pen';
-import { dataStore } from 'src/data-store';
-import { qqi } from 'src/qqi';
-import { LocalConfig } from 'src/types';
+import { dataStore } from '../data-store/index';
+import { LocalConfig } from '../types';
+import { qqi } from '../utils/qqi';
 
-/** 读取本地的用户名  */
+/**
+ * 读取本地的用户名
+ * @param data 读取本地设置的数据
+ * @param pro 读取的数据
+ */
 export function readLocalValue(
   data: SelectionParamObjectData<string | symbol>[],
   pro: 'name' | 'email' | 'url',

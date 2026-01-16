@@ -1,5 +1,5 @@
+import { selection } from 'a-command';
 import { detectPackageManager } from 'a-node-tools';
-import { command } from './command';
 import { commandParameters } from './data-store/commandParameters';
 import { acceptManagerValue } from './types';
 
@@ -20,7 +20,7 @@ export async function askForPackageManger() {
     }
     return _arr;
   })();
-  const value = await command.selection<acceptManagerValue>({
+  const value = await selection<acceptManagerValue>({
     info: '请选择您使用的包管理器',
     data,
   });

@@ -1,15 +1,18 @@
-import { waiting } from './../waiting';
-import { command } from '../command';
-import { isUndefined } from 'a-type-of-js';
+import { mkdirSync } from 'node:fs';
+import { question } from 'a-command';
 import { getNpmPkgInfo, isEmptyDir } from 'a-node-tools';
+import { isUndefined } from 'a-type-of-js';
 import { brightRedPen, hexPen, magentaPen } from 'color-pen';
 import { dataStore } from '../data-store';
-import { mkdirSync } from 'node:fs';
 import { exitProgram } from '../utils';
-import { dog, dun } from 'src/dog';
+import { dog, dun } from '../utils/dog';
+import { waiting } from '../utils/waiting';
 import { carryRange } from './carryRange';
 
-/**  目录审视及构建目录  */
+/**
+ *  目录审视及构建目录
+ * @param pkgName
+ */
 export async function createCatalog(pkgName: string): Promise<boolean> {
   dataStore.childPkg = dataStore.carryRange = false;
   if (pkgName.startsWith('@')) {
@@ -33,7 +36,7 @@ export async function createCatalog(pkgName: string): Promise<boolean> {
   // 检测出当前目录下包含同名包且不为空
   if (dirIsEmpty == 0) {
     const tip = ['更换为其他名称', '直接退出'];
-    const result = await command.question({
+    const result = await question({
       text: `当前目录下存在非空同名文件夹（${brightRedPen(pkgName)})`,
       tip,
     });
@@ -56,7 +59,7 @@ export async function createCatalog(pkgName: string): Promise<boolean> {
   dog('获取线上的 npm 包数据', pkgInfo);
   if (pkgInfo.data) {
     const tip = ['更改为其他名称', '忽视并继续', '直接退出'];
-    const response = await command.question({
+    const response = await question({
       text: hexPen(
         '#f63',
       )`当前包名称（${magentaPen(pkgName)}）已经存在于 npm 中`,

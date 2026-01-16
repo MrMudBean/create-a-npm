@@ -1,12 +1,6 @@
-import { _p, colorLine, pathJoin, writeJsonFile } from 'a-node-tools';
-import { askForName } from './ask-for-name';
-import { createNpm } from './createNpm';
-import custom from './custom';
-import { dog } from './dog';
 import { unlinkSync } from 'node:fs';
-import { exitProgram } from './utils';
-import { dataStore } from './data-store';
-import { installDependencies } from './installDependencies';
+import { _p, colorLine, pathJoin, writeJsonFileSync } from 'a-node-tools';
+import { isEmptyString } from 'a-type-of-js';
 import {
   brightBlackPen,
   brightGreenPen,
@@ -14,17 +8,23 @@ import {
   greenPen,
   magentaPen,
 } from 'color-pen';
-import { parse } from './parse';
-import { commandParameters } from './data-store/commandParameters';
-import { isEmptyString } from 'a-type-of-js';
+import { askForName } from './ask-for-name';
 import { askForPackageManger } from './ask-for-package-manager';
+import { createNpm } from './createNpm';
+import custom from './custom';
+import { dataStore } from './data-store';
+import { commandParameters } from './data-store/commandParameters';
+import { installDependencies } from './installDependencies';
+import { parse } from './parse';
+import { exitProgram } from './utils';
+import { dog } from './utils/dog';
 
 (async () => {
   // 可写校验
   try {
     try {
       const testFile = pathJoin('test_write' + Date.now());
-      writeJsonFile(testFile, {});
+      writeJsonFileSync(testFile, {});
       unlinkSync(testFile);
     } catch (error) {
       dog.error(error);

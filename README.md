@@ -1,6 +1,9 @@
 # 构建简单的 npm 库
 
-[![version](<https://img.shields.io/npm/v/create-a-npm.svg?logo=npm&logoColor=rgb(0,0,0)&label=版本号&labelColor=rgb(73,73,228)&color=rgb(0,0,0)>)](https://www.npmjs.com/package/create-a-npm) [![issues 提交](<https://img.shields.io/badge/issues-提交-rgb(255,0,63)?logo=github>)](https://github.com/earthnutDev/create-a-npm/issues)
+[![version](<https://img.shields.io/npm/v/create-a-npm.svg?logo=npm&logoColor=rgb(0,0,0)&label=版本号&labelColor=rgb(73,73,228)&color=rgb(0,0,0)>)](https://www.npmjs.com/package/create-a-npm) [![issues 提交](<https://img.shields.io/badge/issues-提交-rgb(255,0,63)?logo=github>)](https://github.com/MrMudBead/create-a-npm/issues)
+
+> [info]
+> 广告时间到，推荐 [vscode 插件](https://marketplace.visualstudio.com/items?itemName=MrMudBean.auto-last-modified) 自动添加文件头部注释
 
 ## 安装
 

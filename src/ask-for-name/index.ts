@@ -1,10 +1,10 @@
-import { dog } from './../dog';
-import { command } from '../command';
+import { sleep } from 'a-js-tools';
 import { isBusinessEmptyString, isFalse } from 'a-type-of-js';
-import { readName } from './read-name';
+import { command } from '../utils/command';
+import { dog } from '../utils/dog';
 import { createCatalog } from './createCatalog';
 import { nameIsNotEligible } from './nameIsNotEligible';
-import { sleep } from 'a-js-tools';
+import { readName } from './read-name';
 
 /**
  *

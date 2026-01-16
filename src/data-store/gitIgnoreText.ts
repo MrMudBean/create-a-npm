@@ -4,6 +4,7 @@ export function gitIgnoreText() {
 node_modules
 dist
 *.tgz
+*.zip
 coverage
 .DS_Store
 .eg`;

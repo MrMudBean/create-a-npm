@@ -1,16 +1,15 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dataStore } from 'src/data-store';
-import { commandParameters } from 'src/data-store/commandParameters';
+import { commandParameters } from '../data-store/commandParameters';
+import { dataStore } from '../data-store/index';
 
 /**  构建 github action CI/CD  */
 export function createAction() {
   const { manager } = commandParameters;
-  /**  dir  */
-  const dir = '.github/workflows';
+  const workflow = '.github/workflows';
   // 创建外层目录
-  mkdirSync(dataStore.pkgFile(dir), { recursive: true });
+  mkdirSync(dataStore.pkgFile(workflow), { recursive: true });
   writeFileSync(
-    dataStore.pkgFile(dir, '发布.yml'),
+    dataStore.pkgFile(workflow, '发布.yml'),
     `name: 发布到 npm
 on:
   push:
@@ -28,6 +27,13 @@ on:
         default: ''
         type: string
 
+# 新的 OpenID Connect 验证方式
+# 无需手动填写 NODE_AUTH_TOKEN 且定期更换
+permissions:
+  id-token: write # 唯一必须的权限：启用 OIDC
+  contents: read # write 必须，克隆代码库权限
+  # packages: write
+
 jobs:
   pub:
     # 在提交的代码包含 \`version\` 字样时才运行该动作
@@ -35,10 +41,6 @@ jobs:
     name: |
       发布到 npm
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: write
-      id-token: write
     # 复合条件判断（自动触发检查提交信息，手动触发直接放行）
     # startsWith(github.event.head_commit.message, 'version')
     # contains(github.event.inputs.version, '手动触发')
@@ -56,8 +58,15 @@ jobs:
       - name: 初始化 Node 并设定 Node 版本
         uses: actions/setup-node@v4
         with:
-          node-version: 22.x
+          node-version: 24
           registry-url: https://registry.npmjs.org
+
+      - name: clean npm auth
+        run: |
+          npm config delete //registry.npmjs.org/:_authToken
+          rm -f ~/.npmrc
+        shell: bash
+
             ${
               manager.value === 'pnpm'
                 ? `
@@ -102,7 +111,7 @@ jobs:
        
       - name: 发布到 npm
         env:
-          NODE_AUTH_TOKEN: \${{secrets.NPM_TOKEN}}
+          NPM_CONFIG_USERCONFIG: /dev/null # 强制忽略本地配置
         run: |
           chmod +x ./scripts/pub.sh
           ./scripts/pub.sh

@@ -22,7 +22,8 @@ packageJson = {
     email: 'earthnut.dev@outlook.com',
     url: 'https://earthnut.dev',
   },
-
+  description: '一个简单的代码模板库',
+  license: 'MIT',
   files: ['bin.mjs'],
   keywords: ['crate-a-npm', 'create-a-pkg', 'earthnut'],
   repository: {

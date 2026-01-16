@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs';
-import { dataStore } from 'src/data-store';
+import { dataStore } from '../data-store/index';
+
 /**  markdown   */
 export function markdown() {
   writeFileSync(

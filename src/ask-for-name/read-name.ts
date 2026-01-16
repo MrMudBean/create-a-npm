@@ -1,11 +1,11 @@
+import { question } from 'a-command';
 import { isUndefined } from 'a-type-of-js';
-import { command } from '../command';
-import { exitProgram } from '../utils';
 import { magentaPen } from 'color-pen';
+import { exitProgram } from '../utils';
 
 /**  读取包名  */
 export async function readName(): Promise<string> {
-  const result = await command.question({
+  const result = await question({
     text: '您即将创建的包名',
     tip: '请使用空格/连字符(-)做分隔符',
     minLen: 1,

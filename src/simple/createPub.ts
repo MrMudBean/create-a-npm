@@ -1,8 +1,8 @@
-import { pathJoin } from 'a-node-tools';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dataStore } from 'src/data-store';
-import { commandParameters } from 'src/data-store/commandParameters';
-import { createCI } from 'src/utils';
+import { pathJoin } from 'a-node-tools';
+import { commandParameters } from '../data-store/commandParameters';
+import { dataStore } from '../data-store/index';
+import { createCI } from '../utils';
 
 /**  写入 pub.sh  */
 export function createPub() {

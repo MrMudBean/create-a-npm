@@ -1,15 +1,16 @@
-import { dataStore } from 'src/data-store';
-import { createTs } from './createTs';
-import { createRollup } from './createRollup';
-import { createReadMe } from './createReadMe';
-import { createPackage } from './createPackage';
-import { createLicense } from './createLicense';
-import { createIndex } from './createIndex';
-import { createChangeLog } from './createChangeLog';
 import { writeFileSync } from 'node:fs';
+
+import { dataStore } from '../data-store/index';
+import { createChangeLog } from './createChangeLog';
+import { createIndex } from './createIndex';
+import { createLicense } from './createLicense';
+import { createPackage } from './createPackage';
+import { createReadMe } from './createReadMe';
+import { createRollup } from './createRollup';
+import { createRollupEg } from './createRollupEg';
 import { createScripts } from './createScripts';
 import { createTest } from './createTest';
-import { createRollupEg } from './createRollupEg';
+import { createTs } from './createTs';
 
 /**    */
 export function createChild() {

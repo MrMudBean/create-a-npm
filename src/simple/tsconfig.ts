@@ -11,7 +11,9 @@ export function tsconfigJson(): void {
 export function tsconfigBaseJson(): void {
   writeToJsonFile('tsconfig.base.json', {
     compilerOptions: {
-      baseUrl: '.',
+      forceConsistentCasingInFileNames: true,
+      // baseUrl: '.',
+      rootDir: '.',
       jsx: 'preserve',
       strict: true,
       target: 'ESNext',
@@ -28,7 +30,7 @@ export function tsconfigBaseJson(): void {
 }
 
 /** 导出生成 tsconfig.json 配置文件 */
-export function _tsconfigJson(): void {
+function _tsconfigJson(): void {
   writeToJsonFile('tsconfig.json', {
     extends: './tsconfig.base.json',
     include: ['index.ts', 'src/**/*.ts', '**.d.ts', 'test/**/*.ts'],
@@ -43,7 +45,7 @@ export function tsconfigTypesJson(): void {
     compilerOptions: {
       emitDeclarationOnly: true,
       declaration: true,
-      declarationDir: 'dist/',
+      declarationDir: 'dist/es',
     },
     exclude: ['node_modules', 'test', 'dist', 'eg'],
   });

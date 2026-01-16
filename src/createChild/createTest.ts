@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { dataStore } from 'src/data-store';
+import { dataStore } from '../data-store/index';
 
 /**  构建测试  */
 export function createTest() {
@@ -12,8 +12,9 @@ export function createTest() {
 
   writeFileSync(
     dataStore.pkgFile('eg/index.' + filePrefix),
-    `import { sayHello } from '../index';
-    sayHello(); 
+    `import { sayHello } from '../src/index';
+
+sayHello(); 
 `,
   );
 }

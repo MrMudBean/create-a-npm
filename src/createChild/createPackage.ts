@@ -1,6 +1,6 @@
-import { PackageJson, writeJsonFile } from 'a-node-tools';
-import { dataStore } from 'src/data-store';
-import { commandParameters } from 'src/data-store/commandParameters';
+import { PackageJson, writeJsonFileSync } from 'a-node-tools';
+import { commandParameters } from '../data-store/commandParameters';
+import { dataStore } from '../data-store/index';
 
 /**  构建 package.json  */
 export function createPackage() {
@@ -34,5 +34,5 @@ export function createPackage() {
     license: 'MIT',
   };
 
-  writeJsonFile(dataStore.pkgFile('package.json'), pkgInfo);
+  writeJsonFileSync(dataStore.pkgFile('package.json'), pkgInfo);
 }
