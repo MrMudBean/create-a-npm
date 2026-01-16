@@ -1,54 +1,56 @@
-import {
-  pathJoin,
-  readFileToJsonSync,
-  getDirectoryBy,
-  writeJsonFile,
-} from 'a-node-tools';
+import { pathJoin, writeJsonFileSync, getPackageJsonSync } from 'a-node-tools';
+import { isNull } from 'a-type-of-js';
+import { dirname } from 'node:path';
 
-let packageJson = readFileToJsonSync('./package.json');
+const packageJsonResponse = getPackageJsonSync();
 
-[
-  'scripts',
-  // 本应用比较依赖于 devDependencies
-  // 'devDependencies',
-  'lint-staged',
-  'private',
-].forEach(key => delete packageJson[key]);
+if (isNull(packageJsonResponse)) {
+  throw new RangeError('未能识别配置文件 package.json');
+}
+
+let packageJson = packageJsonResponse.content;
+// 移除冗余的键
+['scripts', 'lint-staged', 'private', 'dependencies'].forEach(
+  key => delete packageJson[key],
+);
 
 packageJson = {
   ...packageJson,
   author: {
-    name: '🥜',
-    email: 'earthnut.dev@outlook.com',
+    name: '泥豆君',
+    email: 'Mr.MudBean@outlook.com',
     url: 'https://earthnut.dev',
   },
   description: '一个简单的代码模板库',
   license: 'MIT',
-  files: ['bin.mjs'],
-  keywords: ['crate-a-npm', 'create-a-pkg', 'earthnut'],
-  repository: {
-    type: 'git',
-    url: 'git+https://github.com/earthnutDev/create-a-npm.git',
-  },
+  files: ['bin.js', 'LICENSE', 'README.md', 'THIRD-PARTY-LICENSES.txt'],
+  keywords: ['crate-a-npm', 'create-a-pkg', 'crate a npm'],
   homepage: 'https://earthnut.dev/npm/create-a-npm',
   bugs: {
-    url: 'https://github.com/earthnutDev/create-a-npm/issues',
-    email: 'earthnut.dev@outlook.com',
+    url: 'https://github.com/MrMudBean/create-a-npm/issues',
+    email: 'Mr.MudBean@outlook.com',
+  },
+  repository: {
+    type: 'git',
+    url: 'git+https://github.com/MrMudBean/create-a-npm.git',
   },
   publishConfig: {
     access: 'public',
     registry: 'https://registry.npmjs.org/',
   },
   bin: {
-    'create-a-npm': 'bin.mjs',
+    'create-a-npm': 'bin.js',
+  },
+  engines: {
+    // 新增：声明 Node.js 兼容版本
+    node: '>=18.0.0',
   },
 };
 
 // 写入 dist/package.json
 {
-  const distPath = getDirectoryBy('dist', 'directory');
-
-  const distPackagePath = pathJoin(distPath, './dist/package.json');
-
-  writeJsonFile(distPackagePath, packageJson);
+  writeJsonFileSync(
+    pathJoin(dirname(packageJsonResponse.path), './dist/package.json'),
+    packageJson,
+  );
 }
