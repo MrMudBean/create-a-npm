@@ -1,16 +1,17 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync } from 'node:fs';
 import { pathJoin } from 'a-node-tools';
-import { commandParameters } from '../data-store/commandParameters';
+import { commandParameters } from '../data-store/command-parameters';
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
-import { createCI } from '../utils';
+import { createCI, writeToFile } from '../utils';
 
 /**  写入 pub.sh  */
 export function createPub() {
   const { manager } = commandParameters;
   mkdirSync(pathJoin(dataStore.pkgFile('scripts')), { recursive: true });
 
-  writeFileSync(
-    dataStore.pkgFile('scripts', 'pub.sh'),
+  writeToFile(
+    FileName.PUB_SH,
     `#!/bin/bash
 
 CHECK_VERSION="@qqi/check-version"

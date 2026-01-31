@@ -1,10 +1,10 @@
-import { writeFileSync } from 'node:fs';
-import { dataStore } from '../../data-store/index';
+import { FileName } from '../../data-store/file-name-enum';
+import { writeToFile } from '../../utils/index';
 
 /**  检验安装  */
 export function checkVersionInstall() {
-  writeFileSync(
-    dataStore.rangeFile('scripts/check_version_install.sh'),
+  writeToFile(
+    FileName.CHECK_VERSION_INSTALL,
     `#!/bin/bash
 
 install_check_version() {
@@ -16,5 +16,6 @@ install_check_version() {
          echo "包 \${CHECK_VERSION} 已全局安装"
     fi
 }`,
+    'range',
   );
 }

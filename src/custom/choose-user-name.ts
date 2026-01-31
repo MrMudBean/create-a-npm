@@ -7,8 +7,8 @@ import { dataStore } from '../data-store/index';
 import { dog, dun } from '../utils/dog';
 import { exitProgram } from '../utils/index';
 import { qqi } from '../utils/qqi';
-import { appendDiy } from './util-append-diy';
 import { readLocalValue } from './readLocalValue';
+import { appendDiy } from './util-append-diy';
 
 /** 获取本地的 git username  */
 export async function chooseUserName() {

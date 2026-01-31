@@ -1,12 +1,13 @@
-import { writeFileSync } from 'node:fs';
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
+import { writeToFile } from '../utils/index';
 
 /**  构建测试  */
 export function createRollupEg() {
   const { dependencies: de } = dataStore.local;
   const ts = de.includes('typescript');
-  writeFileSync(
-    dataStore.pkgFile('rollup.config.eg.js'),
+  writeToFile(
+    FileName.ROLLUP_EG_CONFIG,
     `${ts ? "import typescript from '@rollup/plugin-typescript';" : ''}
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -36,7 +37,7 @@ export default {
       ts
         ? `
 typescript({
-tsconfig: './tsconfig.rollup.json',
+tsconfig: './${FileName.TSCONFIG_ROLLUP}',
 }),
 `
         : ''

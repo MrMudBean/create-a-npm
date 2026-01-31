@@ -1,16 +1,16 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { commandParameters } from '../data-store/commandParameters';
+import { mkdirSync } from 'node:fs';
+import { commandParameters } from '../data-store/command-parameters';
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
-import { createCI } from '../utils';
+import { createCI, writeToFile } from '../utils';
 
 /**  创建 github action  */
 export function createAction() {
   const { manager } = commandParameters;
-  const dir = '.github/workflows';
   // 创建外层目录
-  mkdirSync(dataStore.rangeFile(dir), { recursive: true });
-  writeFileSync(
-    dataStore.rangeFile(dir, '发布.yml'),
+  mkdirSync(dataStore.rangeFile(FileName.CI_CD), { recursive: true });
+  writeToFile(
+    FileName.CI_CD_PUB,
     `name: 发布到 npm
 on:
   push:
@@ -128,17 +128,15 @@ jobs:
       - name: 安装全局依赖
         run: |
           ${createCI()}
-          cd scripts
-          chmod +x detect_changes.sh workflow_dispatch.sh pub.sh
-          # chmod +x scripts/detect_changes.sh
-          # chmod +x scripts/workflow_dispatch.sh
-          # chmod +x scripts/pub.sh
+          chmod +x ${FileName.DETECT_CHANGES}
+          chmod +x ${FileName.WORKFLOW_DISPATCH}
+          chmod +x ${FileName.PUB_SH}
 
       - name: 检测子包变更情况（推送代码时触发）
         if: github.event_name == 'push'
         id: detect-changes
         run: |
-          ./scripts/detect_changes.sh
+          ./${FileName.DETECT_CHANGES}
 
       - name: 检测子包变更情况（手动触发时触发）
         if: github.event_name == 'workflow_dispatch'
@@ -146,7 +144,7 @@ jobs:
         env:
           INPUT_PACKAGE: \${{ github.event.inputs.package }}
         run: |
-          ./scripts/workflow_dispatch.sh
+          ./${FileName.WORKFLOW_DISPATCH}
 
       - name: 设置工作根路径
         run: |
@@ -159,8 +157,9 @@ jobs:
           UPDATE_PACKAGES: \${{ env.update_packages }}
           REPO_ROOT: \${{ env.REPO_ROOT }}
         run: |
-          ./scripts/pub.sh
+          ./${FileName.PUB_SH}
 
   `,
+    'range',
   );
 }

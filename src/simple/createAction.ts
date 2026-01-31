@@ -1,15 +1,16 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { commandParameters } from '../data-store/commandParameters';
+import { mkdirSync } from 'node:fs';
+import { commandParameters } from '../data-store/command-parameters';
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
+import { writeToFile } from '../utils/index';
 
 /**  构建 github action CI/CD  */
 export function createAction() {
   const { manager } = commandParameters;
-  const workflow = '.github/workflows';
   // 创建外层目录
-  mkdirSync(dataStore.pkgFile(workflow), { recursive: true });
-  writeFileSync(
-    dataStore.pkgFile(workflow, '发布.yml'),
+  mkdirSync(dataStore.pkgFile(FileName.CI_CD), { recursive: true });
+  writeToFile(
+    FileName.CI_CD_PUB,
     `name: 发布到 npm
 on:
   push:
@@ -113,8 +114,8 @@ jobs:
         env:
           NPM_CONFIG_USERCONFIG: /dev/null # 强制忽略本地配置
         run: |
-          chmod +x ./scripts/pub.sh
-          ./scripts/pub.sh
+          chmod +x ./${FileName.PUB_SH}
+          ./${FileName.PUB_SH}
 `,
   );
 }

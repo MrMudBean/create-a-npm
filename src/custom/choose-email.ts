@@ -6,8 +6,8 @@ import { dataStore } from '../data-store/index';
 import { dun, dog } from '../utils/dog';
 import { exitProgram } from '../utils/index';
 import { qqi } from '../utils/qqi';
-import { appendDiy } from './util-append-diy';
 import { readLocalValue } from './readLocalValue';
+import { appendDiy } from './util-append-diy';
 
 /**  配置使用邮箱   */
 export async function chooseEmail() {

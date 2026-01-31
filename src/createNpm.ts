@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation
  * @module @create-a-npm/createNpm
  * @file createNpm.ts
  * @description 创建 npm 主要内容
@@ -8,11 +7,11 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 13:45
  * @version 1.1.0
- * @lastModified 2026-01-16 13:46
+ * @lastModified 2026-01-30 19:27
  *
  * 该操作出现在命名完成后
  */
-import { askForName } from './ask-for-name';
+import { askForName } from './ask-for-package-name';
 import { createRange } from './create-range';
 import { createChild } from './createChild';
 import custom from './custom';
@@ -38,8 +37,8 @@ export async function createNpm(): Promise<void> {
     return;
   }
 
-  if (dataStore.childPkg) {
-    if (dataStore.carryRange) createRange();
+  if (dataStore.workspace) {
+    if (dataStore.withRoot) createRange();
     createChild();
     return;
   }

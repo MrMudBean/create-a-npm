@@ -1,6 +1,7 @@
 import { PackageJson } from 'a-node-tools';
 import { dataStore } from '../data-store';
-import { commandParameters } from '../data-store/commandParameters';
+import { commandParameters } from '../data-store/command-parameters';
+import { FileName } from '../data-store/file-name-enum';
 import { writeToJsonFile } from '../utils';
 
 /** 生成 package.json 文件内容  */
@@ -28,14 +29,14 @@ export function packageJson() {
     private: true,
     description: '',
     scripts: {
-      b: `rollup --config rollup.config.js${dataStore.bin !== 1 && ts ? ' && tsc -p tsconfig.types.json' : ''}`,
+      b: `rollup --config ${FileName.ROLLUP_CONFIG} ${dataStore.bin !== 1 && ts ? ` && tsc -p ${FileName.TSCONFIG_TYPES}` : ''}`,
       build: `jja cls rm dist && ${manager.value} run b && ${manager.value} run clean:package`,
-      'clean:package': 'node scripts/clean-package-json.js',
+      'clean:package': 'node '.concat(FileName.CLEAN_PACKAGE_JSON),
       diff: 'jja pkg --diff=淘宝',
       prepublishOnly: 'pjj',
       push: 'gvv',
       'push:version': 'gvv',
-      test: 'jja rm .eg && rollup --config rollup.config.eg.js && node .eg/index.js',
+      test: `jja rm .eg && rollup --config ${FileName.ROLLUP_EG_CONFIG} && node .${FileName.EG_INDEX_JS}`,
       vjj: 'vjj',
     },
     devDependencies: dataStore.buildDevDependencies(),
@@ -80,5 +81,5 @@ export function packageJson() {
 
   // 通过这种方法移除 description 属性
   const { description: _, ..._buildPKGInfo } = pkgInfo;
-  writeToJsonFile('package.json', _buildPKGInfo);
+  writeToJsonFile(FileName.PACKAGE_JSON, _buildPKGInfo);
 }

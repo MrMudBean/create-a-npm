@@ -1,17 +1,36 @@
-import { writeFileSync } from 'node:fs';
-import { dataStore } from '../data-store/index';
+/**
+ * @packageDocumentation
+ * @module @create-a-npm/rollup-text
+ * @file rollup-text.ts
+ * @description _
+ * @author MrMudBean <Mr.MudBean@outlook.com>
+ * @license MIT
+ * @copyright 2026 ©️ MrMudBean
+ * @since 2026-01-30 07:47
+ * @version 1.2.0
+ * @lastModified 2026-01-31 07:54
+ */
+
+import { WriteToFileKind } from '../types';
+import { FileName } from './file-name-enum';
+import { dataStore } from './index';
 
 /**
- *  生成 rollup 打包工具的配置文件信息
+ *
+ * @param kind
  */
-export function rollup(): void {
+export function createRollupText(kind: WriteToFileKind) {
   const { dependencies: de } = dataStore.local;
   const ts = de.includes('typescript');
   const isBin = dataStore.bin === 1;
 
-  writeFileSync(
-    dataStore.pkgFile('rollup.config.js'),
-    `${ts ? "import typescript from '@rollup/plugin-typescript';" : ''}
+  return `${
+    ts
+      ? `// import typescript from '@rollup/plugin-typescript';
+// 使用更可控的 rollup-plugin-typescript2 代替官插 @rollup/plugin-typescript
+import typescript from 'rollup-plugin-typescript2';`
+      : ''
+  }
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -25,11 +44,11 @@ ${
 }
 
 export default {
-  input: './src/index.${ts ? 'ts' : 'js'}',
+  input: './${ts ? FileName.INDEX_TS : FileName.INDEX_JS}',
   output: ['es' ${isBin ? '' : ", 'cjs'"} ].map(e => ({
     format: e, // 打包模式
     entryFileNames: '${isBin ? 'bin' : '[name]'}.js', // 打包文件名
-    preserveModules: false, // 保留独立模块结构（关键）
+    preserveModules: ${isBin}, // 保留独立模块结构（关键）
     // preserveModulesRoot: 'src', // 保持 src 目录结构
     sourcemap: false, // 正式环境：关闭 source map
     // exports: 'named', // 导出模式
@@ -40,9 +59,24 @@ export default {
     ignore: ['node:']
   }),
   plugins: [
-    resolve(),
+    resolve({
+      extensions: ['.js', '.ts', '.jsx', '.tsx'], // 按需添加
+    }),
     commonjs(),
-    json(),${ts ? '\ntypescript(),' : ''}
+    json(),${
+      ts
+        ? `\ntypescript({
+        tsconfig: './${kind === 'pkg' ? FileName.TSCONFIG : FileName.TSCONFIG_ROLLUP}',
+        tsconfigOverride: {
+        noEmit: true, // 仅允许生成类型文件
+        declaration: true,
+        emitDeclarationOnly: true,
+        importHelpers: false, // 确保不引入 tslib
+      },
+      clean: true,
+    }),`
+        : ''
+    }
     cleanup(), ${
       isBin
         ? `\nterser({
@@ -79,6 +113,5 @@ export default {
         : ''
     }
   ],
-};`,
-  );
+};`;
 }

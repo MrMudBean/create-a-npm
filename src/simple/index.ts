@@ -1,20 +1,24 @@
-import { createChangeLog } from '../createChild/createChangeLog';
-import { createIndex } from '../createChild/createIndex';
-import { createLicense } from '../createChild/createLicense';
-import { createReadMe } from '../createChild/createReadMe';
-import { createScripts } from '../createChild/createScripts';
-import { createTest } from '../createChild/createTest';
 import { dataStore } from '../data-store/index';
+import {
+  createChangeLog,
+  createIndex,
+  createLicense,
+  createReadMe,
+  createScripts,
+  createTest,
+  createTsconfig,
+  createTsconfigBase,
+  createTsconfigTypes,
+  eslintConfig,
+  gitIgnore,
+  markdown,
+  prettier,
+  rollup,
+} from '../utils/index';
 import { createAction } from './createAction';
 import { createPub } from './createPub';
 import { createRollupEg } from './createRollupEg';
-import { eslintConfig } from './eslint';
-import { gitIgnore } from './gitIgnore';
-import { markdown } from './markdown';
 import { packageJson } from './package';
-import { prettier } from './prettier';
-import { rollup } from './rollup';
-import { tsconfigJson } from './tsconfig';
 
 /**
  *
@@ -40,4 +44,10 @@ export function packageIndex() {
   gitIgnore();
   createScripts();
   createTest();
+}
+/** 将创建三个 tsconfig 文件的方法合并 */
+export function tsconfigJson(): void {
+  createTsconfigBase();
+  createTsconfig();
+  createTsconfigTypes();
 }

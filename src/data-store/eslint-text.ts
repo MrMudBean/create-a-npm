@@ -1,3 +1,4 @@
+import { FileName } from './file-name-enum';
 import { dataStore } from '.';
 
 /**  构建 eslint 文本  */
@@ -23,7 +24,7 @@ ${
 import { fileURLToPath } from 'node:url';
   
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const tsconfigPath = resolve(__dirname, 'tsconfig.types.json');`
+const tsconfigPath = resolve(__dirname, ${dataStore.workspace ? FileName.TSCONFIG_ROLLUP : FileName.TSCONFIG});`
     : mark
 }
 
@@ -57,6 +58,9 @@ export default [
       globals: {
         ...globals.browser, // 浏览器全局变量
         ...globals.node, // Node.js 全局变量
+        // React: 'readonly', // 常用于 React 项目
+        // chrome: 'readonly', // 常用于 chrome 插件开发
+        // NodeJS: 'readonly', // 常用语 Node 环境，其实 \`NodeJs.timeout\` 更常用
       },
     },
   },
@@ -113,6 +117,15 @@ export default [
           args: 'after-used',
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
+        },
+      ],
+      // 自动修复 tsconfig.json 中开启 \`compilerOptions.verbatimModuleSyntax\` 的类型错误提示
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false, // 禁用 在单个 import 中混合值与类型
+          fixStyle: 'inline-type-imports',
         },
       ],
       'import/order': [
@@ -237,7 +250,7 @@ ${
   ${
     prettier
       ? ` // ${typescript ? 4 : 5}. 关闭 Prettier 冲突规则（必须，用 Prettier 时）
-  eslintConfigPrettier,`
+  prettierConfig,`
       : mark
   }
   //  ${typescript ? 5 : 6} 文件特定覆盖

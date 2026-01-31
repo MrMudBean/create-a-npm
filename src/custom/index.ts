@@ -1,5 +1,4 @@
 /**
- * @packageDocumentation
  * @module @create-a-npm/custom
  * @file index.ts
  * @description 自定义数据
@@ -8,13 +7,13 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-28 22:26
  * @version 1.1.0
- * @lastModified 2026-01-16 22:26
+ * @lastModified 2026-01-30 05:19
  */
 import { dog } from '../utils/dog';
+import { askForWithBin } from './ask-for-bin';
 import { askForDependencies } from './ask-for-dependencies';
 import { askForInitDependencies } from './ask-for-init-dependencies';
 import { askForLastConfig } from './ask-for-last-config';
-import { askForWithBin } from './ask-for-bin';
 import { chooseEmail } from './choose-email';
 import { chooseUrl } from './choose-url';
 import { chooseUserName } from './choose-user-name';

@@ -1,10 +1,10 @@
-import { writeFileSync } from 'node:fs';
-import { dataStore } from '../../data-store/index';
+import { FileName } from '../../data-store/file-name-enum';
+import { writeToFile } from '../../utils/index';
 
 /**  校验文件更替  */
 export function detectChanges() {
-  writeFileSync(
-    dataStore.rangeFile('scripts/detect_changes.sh'),
+  writeToFile(
+    FileName.DETECT_CHANGES,
     `#!/bin/bash
 
 # 获取上一次提交的 SHA
@@ -45,5 +45,6 @@ echo "准备好了么"
 main
 echo "哈哈，执行 🎊 🎊 🎊"
 `,
+    'range',
   );
 }

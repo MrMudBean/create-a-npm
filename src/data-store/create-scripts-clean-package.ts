@@ -1,17 +1,29 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { pathJoin } from 'a-node-tools';
-import { dataStore } from '../data-store/index';
+/**
+ * @packageDocumentation
+ * @module @create-a-npm/create-scripts-clean-package
+ * @file create-scripts-clean-package.ts
+ * @description _
+ * @author MrMudBean <Mr.MudBean@outlook.com>
+ * @license MIT
+ * @copyright 2026 ©️ MrMudBean
+ * @since 2026-01-30 08:09
+ * @version 1.2.0
+ * @lastModified 2026-01-30 09:26
+ */
 
-/**  构建脚本域  */
-export function createScripts() {
+import { mkdirSync } from 'node:fs';
+import { pathJoin } from 'a-node-tools';
+import { dataStore } from './index';
+
+/**
+ */
+export function createScriptCleanPackage() {
   mkdirSync(pathJoin(dataStore.pkgFile('scripts')), { recursive: true });
   const { author } = dataStore.local;
   const nameList = dataStore.name.replace(/^@/, '').split('/');
   const name = nameList[0]; // 包名
   const { bin } = dataStore;
-  writeFileSync(
-    dataStore.pkgFile('scripts/clean-package-json.js'),
-    `import {
+  return `import {
   pathJoin,
   readFileToJsonSync,
   writeJsonFileSync,
@@ -114,10 +126,10 @@ packageJson = {
     email: '${author.email}',
     url: '${author.url}',
   },
+  sideEffects: false, // 如果是 react 等库包，可能需要使用 ['*.css' ,'*.scss' ,'*.sass', '*.less'] 或其他
   description: '',
   license: 'MIT',
   files: [${bin !== 1 ? 'cjsPrefix, esPrefix ,' : ''} ${bin !== 0 ? 'bin.js ,' : ''} 'LICENSE', 'README.md'],
-  
   exports: {
     '.': {
       import: {
@@ -130,9 +142,8 @@ packageJson = {
       },
     },
   },
-
   keywords: ['${name}', '${nameList[0]}'],
-  homepage: '${author.url}',
+  homepage: '${author.url.startsWith('http') ? author.url : 'https://'.concat(author.url)}',
   dependencies,
   bugs: {
     url: 'https://github.com/${author.name}/${name}/issues',
@@ -154,7 +165,7 @@ packageJson = {
     access: 'public',
     registry: 'https://registry.npmjs.org/',
   },
-  browserslist: ['node>=18.0.0'],
+  browserslist: ['> 1%', 'last 2 versions'], // 浏览器兼容
   engines: {
     node: '>=18.0.0',
   },
@@ -166,6 +177,5 @@ packageJson = {
   // 写入新的 packages.json 文件
   writeJsonFileSync(distPackagePath, packageJson);
 }
-`,
-  );
+`;
 }

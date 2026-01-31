@@ -1,30 +1,35 @@
-import { writeFileSync } from 'node:fs';
-
 import { dataStore } from '../data-store/index';
-import { createChangeLog } from './createChangeLog';
-import { createIndex } from './createIndex';
-import { createLicense } from './createLicense';
+import {
+  createChangeLog,
+  createIndex,
+  createLicense,
+  createReadMe,
+  createScripts,
+  createTest,
+  createTsconfig,
+  createTsconfigTypes,
+  rollup,
+  writeToFile,
+} from '../utils/index';
 import { createPackage } from './createPackage';
-import { createReadMe } from './createReadMe';
-import { createRollup } from './createRollup';
 import { createRollupEg } from './createRollupEg';
-import { createScripts } from './createScripts';
-import { createTest } from './createTest';
-import { createTs } from './createTs';
 
 /**    */
 export function createChild() {
   const { dependencies: de } = dataStore.local;
 
-  if (de.includes('typescript')) createTs();
-  createRollup();
+  if (de.includes('typescript')) {
+    createTsconfig();
+    createTsconfigTypes('range');
+  }
+  rollup('range');
   createRollupEg();
   createReadMe();
   createPackage();
   createLicense();
   createIndex();
   createChangeLog();
-  writeFileSync(dataStore.pkgFile('todo.md'), '# 代办\n\n');
+  writeToFile('todo.md', '# 代办\n\n');
   createScripts();
   createTest();
 }

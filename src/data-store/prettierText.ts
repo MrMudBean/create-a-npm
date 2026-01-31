@@ -1,5 +1,6 @@
 /**  导出 prettier 的文本   */
 export function prettierText() {
+  // 没有注释，使用对象可能更直观些
   return JSON.stringify(
     {
       printWidth: 80,

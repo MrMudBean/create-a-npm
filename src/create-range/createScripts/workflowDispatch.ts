@@ -1,9 +1,9 @@
-import { writeFileSync } from 'node:fs';
-import { dataStore } from '../../data-store/index';
+import { FileName } from '../../data-store/file-name-enum';
+import { writeToFile } from '../../utils/index';
 /**  手动发布审视  */
 export function workflowDispatch() {
-  writeFileSync(
-    dataStore.rangeFile('scripts/workflow_dispatch.sh'),
+  writeToFile(
+    FileName.WORKFLOW_DISPATCH,
     `#!/bin/bash
 
 # 从环境变量中获取手动触发要更新的包数据
@@ -57,5 +57,6 @@ echo "准备好了么"
 main
 echo "哈哈，执行 🎊 🎊 🎊"
 `,
+    'range',
   );
 }

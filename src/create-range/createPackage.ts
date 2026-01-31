@@ -42,10 +42,10 @@ export function createPackage() {
 
   // eslint 脚本
   if (de.includes('eslint'))
-    pkgInfo.scripts['eslint'] = 'jja cls && eslint packages';
+    pkgInfo.scripts['lint'] = 'jja cls && eslint . --fix';
 
   if (de.includes('prettier'))
-    pkgInfo.scripts['prettier'] = 'jja cls && prettier . --write';
+    pkgInfo.scripts['beautify'] = 'jja cls && prettier . --write';
 
   writeJsonFileSync(dataStore.rangeFile('package.json'), pkgInfo);
 }

@@ -1,13 +1,14 @@
-import { writeFileSync } from 'node:fs';
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
+import { writeToFile } from '../utils/index';
 
 /**  构建测试打包  */
 export function createRollupEg() {
   const { dependencies: de } = dataStore.local;
   const ts = de.includes('typescript');
 
-  writeFileSync(
-    dataStore.pkgFile('rollup.config.eg.js'),
+  writeToFile(
+    FileName.ROLLUP_EG_CONFIG,
     `${ts ? "import typescript from '@rollup/plugin-typescript';" : ''}
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -17,7 +18,7 @@ import { external } from '@qqi/rollup-external';
 
 /** 生成  npm 文件的打包配置文件 */
 export default {
-  input: './eg/index.${ts ? 'ts' : 'js'}',
+  input: './${ts ? FileName.EG_INDEX_TS : FileName.EG_INDEX_JS}',
   output: {
     format: 'es',
     entryFileNames: '[name].mjs',

@@ -1,13 +1,12 @@
-import { writeFileSync } from 'node:fs';
-import { commandParameters } from '../../data-store/commandParameters';
-import { dataStore } from '../../data-store/index';
-import { createCI } from '../../utils';
+import { commandParameters } from '../../data-store/command-parameters';
+import { FileName } from '../../data-store/file-name-enum';
+import { createCI, writeToFile } from '../../utils';
 
 /**  构建发布  */
 export function pub() {
   const { manager } = commandParameters;
-  writeFileSync(
-    dataStore.rangeFile('scripts/pub.sh'),
+  writeToFile(
+    FileName.PUB_SH,
     `#!/bin/bash
 
 # 获取环境变量中的变更包字符串
@@ -94,5 +93,6 @@ else
    echo "所有发布均已成功：\${PACKAGE_ARRAY[@]}"
    echo "🚀🚀 发布成功，完结 🎉🎉 撒花 🎉🎉"
 fi`,
+    'range',
   );
 }
