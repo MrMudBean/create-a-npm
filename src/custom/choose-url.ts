@@ -3,7 +3,8 @@ import { isBusinessEmptyString, isType, isUndefined } from 'a-type-of-js';
 import { brightBlackPen } from 'color-pen';
 import { dataStore } from '../data-store/index';
 import { dog, dun } from '../utils/dog';
-import { exitProgram } from '../utils/index';
+
+import { exitProgram } from '../utils/exit-program';
 import { qqi } from '../utils/qqi';
 import { readLocalValue } from './readLocalValue';
 import { appendDiy } from './util-append-diy';

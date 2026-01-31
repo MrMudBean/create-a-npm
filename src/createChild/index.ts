@@ -1,3 +1,4 @@
+import { FileName } from '../data-store/file-name-enum';
 import { dataStore } from '../data-store/index';
 import {
   createChangeLog,
@@ -8,6 +9,8 @@ import {
   createTest,
   createTsconfig,
   createTsconfigTypes,
+  eslintConfig,
+  prettier,
   rollup,
   writeToFile,
 } from '../utils/index';
@@ -17,19 +20,20 @@ import { createRollupEg } from './createRollupEg';
 /**    */
 export function createChild() {
   const { dependencies: de } = dataStore.local;
-
+  createPackage();
   if (de.includes('typescript')) {
     createTsconfig();
-    createTsconfigTypes('range');
+    createTsconfigTypes();
   }
-  rollup('range');
+  rollup();
   createRollupEg();
   createReadMe();
-  createPackage();
   createLicense();
   createIndex();
   createChangeLog();
-  writeToFile('todo.md', '# 代办\n\n');
+  if (de.includes('eslint')) eslintConfig();
+  if (de.includes('prettier')) prettier();
+  writeToFile(FileName.TODO, '# 代办\n\n');
   createScripts();
   createTest();
 }

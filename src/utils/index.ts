@@ -7,16 +7,10 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-28 12:55
  * @version 1.1.0
- * @lastModified 2026-01-31 08:42
+ * @lastModified 2026-02-01 02:03
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import {
-  _p,
-  cursorAfterClear,
-  cursorShow,
-  typewrite,
-  writeJsonFileSync,
-} from 'a-node-tools';
+import { _p, writeJsonFileSync } from 'a-node-tools';
 import { randomPen } from 'color-pen';
 import { dataStore } from '../data-store';
 import { commandParameters } from '../data-store/command-parameters';
@@ -30,12 +24,10 @@ import {
 } from '../data-store/create-tsconfig';
 import { eslintText } from '../data-store/eslint-text';
 import { FileName } from '../data-store/file-name-enum';
-import { licenseText } from '../data-store/licenseText';
+import { licenseText } from '../data-store/license-text';
 import { prettierText } from '../data-store/prettierText';
 import { createRollupText } from '../data-store/rollup-text';
 import { WriteToFileKind } from '../types';
-import { command } from './command';
-import { waiting } from './waiting';
 
 /**
  * ## 打印一些内容
@@ -60,20 +52,6 @@ export function writeToJsonFile(fileName: string, jsonData: unknown): void {
   writeJsonFileSync(dataStore.pkgFile(fileName), jsonData as never);
 }
 
-/**
- * ## 退出程序
- * @param message
- */
-export async function exitProgram(
-  message: string = '好的，正在做退出前最后的工作，请稍等',
-): Promise<never> {
-  await typewrite(message);
-  waiting.destroyed();
-  cursorAfterClear();
-  cursorShow();
-  return command.end();
-}
-
 /**  构建安装  */
 export function createCI() {
   const { manager } = commandParameters;
@@ -91,7 +69,7 @@ export function createCI() {
  *  - `range` 写入到 workspace 的根
  */
 export function writeToFile(
-  path: string,
+  path: FileName,
   text: string,
   kind: WriteToFileKind = 'pkg',
 ) {
@@ -164,10 +142,9 @@ export function createReadMe() {
 
 /**
  *  生成 rollup 打包工具的配置文件信息
- * @param kind 写入的类型
  */
-export function rollup(kind: WriteToFileKind = 'pkg'): void {
-  writeToFile(FileName.ROLLUP_CONFIG, createRollupText(kind));
+export function rollup(): void {
+  writeToFile(FileName.ROLLUP_CONFIG, createRollupText());
 }
 
 /**  构建脚本域  */
@@ -237,11 +214,10 @@ export function createTsconfigBase(kind: WriteToFileKind = 'pkg') {
 
 /**
  * ## 构建打包类型的 tsconfig 配置项
- * @param kind
  */
-export function createTsconfigTypes(kind: WriteToFileKind = 'pkg') {
+export function createTsconfigTypes() {
   if (dataStore.bin !== 1)
-    writeToFile(FileName.TSCONFIG_TYPES, createTsconfigTypeText(kind));
+    writeToFile(FileName.TSCONFIG_TYPES, createTsconfigTypeText());
 }
 
 /**
@@ -252,4 +228,98 @@ export function createTsconfig() {
     dataStore.workspace ? FileName.TSCONFIG_ROLLUP : FileName.TSCONFIG,
     createTsConfigText(),
   );
+}
+
+/**
+ * ##
+ * @param kind 添加的类型
+ *
+ * - 1 代表添加的目录是工作区子包
+ * - 2 代表添加的目录是独立包环境
+ * - 3 代表添加的目录是工作区根
+ */
+export function appendPackageScripts(
+  this: Record<string, any>,
+  kind: 1 | 2 | 3 = 2,
+) {
+  const { dependencies: de } = dataStore.local;
+  const { manager } = commandParameters;
+  const prettier = de.includes('prettier');
+  const husky = de.includes('husky');
+  const eslint = de.includes('eslint');
+  const ts = de.includes('typescript');
+  /**
+   *
+   * @param data 追加的数据
+   * @param attr 属性
+   */
+  const appendPkgInfo = function (
+    // 这里是不安全的，但是涉及到 a-node-tools 包的类型判定
+    // 暂时如此处理
+    this: Record<string, any>,
+    data: Record<string, any>,
+    attr: string = 'scripts',
+  ) {
+    const keys = Object.keys(data);
+    keys.forEach(key => {
+      if (!this[attr]) this[attr] = {};
+      this[attr][key] = data[key];
+    });
+  }.bind(this);
+
+  this.type = 'module';
+  this.private = true;
+
+  // 公共添加
+  appendPkgInfo({
+    vjj: 'vjj',
+    push: 'gvv',
+    diff: 'jja pkg --diff=淘宝',
+  });
+
+  if (kind < 3) {
+    appendPkgInfo({
+      prepublishOnly: 'pjj',
+      'push:version': 'gvv',
+      test: `jja rm .eg && rollup --config ${FileName.ROLLUP_EG_CONFIG} && node .${FileName.EG_INDEX_JS}`,
+      'clean:package': 'node '.concat(FileName.CLEAN_PACKAGE_JSON),
+      b: `rollup --config ${FileName.ROLLUP_CONFIG} ${dataStore.bin !== 1 && ts ? ` && tsc -p ${FileName.TSCONFIG_TYPES}` : ''}`,
+      build: `jja cls rm dist && ${manager.value} run b && ${manager.value} run clean:package`,
+    });
+    delete this.description;
+  }
+  // eslint 脚本
+  if (eslint)
+    appendPkgInfo({
+      lint: 'jja cls && eslint . --fix',
+    });
+
+  // prettier 代码文本格式化
+  if (prettier)
+    appendPkgInfo({
+      beautify: 'jja cls && prettier . --write',
+    });
+
+  // 在非工作区子包添加 lint-staged 钩子
+  if (kind > 1 && husky && (prettier || eslint)) {
+    appendPkgInfo(
+      {
+        '*.{js,ts}': [
+          prettier && 'prettier . --write',
+          eslint && 'eslint . --fix',
+        ].filter(Boolean),
+      },
+      'lint-staged',
+    );
+    appendPkgInfo({
+      prepare: 'husky',
+    });
+  }
+
+  // 依赖放在后面
+  if (kind > 1) {
+    const devDependencies = this.devDependencies ?? {};
+    delete this.devDependencies;
+    this.devDependencies = devDependencies;
+  }
 }

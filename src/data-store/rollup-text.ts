@@ -8,18 +8,16 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 07:47
  * @version 1.2.0
- * @lastModified 2026-01-31 07:54
+ * @lastModified 2026-02-01 01:44
  */
 
-import { WriteToFileKind } from '../types';
 import { FileName } from './file-name-enum';
 import { dataStore } from './index';
 
 /**
- *
- * @param kind
+ * ## 构建文本
  */
-export function createRollupText(kind: WriteToFileKind) {
+export function createRollupText() {
   const { dependencies: de } = dataStore.local;
   const ts = de.includes('typescript');
   const isBin = dataStore.bin === 1;
@@ -66,7 +64,9 @@ export default {
     json(),${
       ts
         ? `\ntypescript({
-        tsconfig: './${kind === 'pkg' ? FileName.TSCONFIG : FileName.TSCONFIG_ROLLUP}',
+        tsconfig: './${
+          dataStore.workspace ? FileName.TSCONFIG_ROLLUP : FileName.TSCONFIG
+        }',
         tsconfigOverride: {
         noEmit: true, // 仅允许生成类型文件
         declaration: true,

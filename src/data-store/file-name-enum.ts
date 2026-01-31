@@ -8,7 +8,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 18:07
  * @version 1.2.0
- * @lastModified 2026-01-31 08:17
+ * @lastModified 2026-02-01 01:53
  */
 
 export enum FileName {
@@ -64,4 +64,6 @@ export enum FileName {
   PRETTIER = '.prettierrc',
   /** prettier ignore 文件 */
   PRETTIER_IGNORE = '.prettierignore',
+  /** 代办 */
+  TODO = 'todo.md',
 }

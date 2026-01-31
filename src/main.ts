@@ -22,9 +22,9 @@ import { dataStore } from './data-store';
 import { commandParameters } from './data-store/command-parameters';
 
 import { acceptManagerValue } from './types';
-import { exitProgram } from './utils';
 import { parse } from './utils/command';
 import { dog } from './utils/dog';
+import { exitProgram } from './utils/exit-program';
 
 (async () => {
   // 可写校验

@@ -1,5 +1,5 @@
 /**
- * @module @create-a-npm/index
+ * @module @create-a-npm/data
  * @file index.ts
  * @description 数据中心
  * @author MrMudBean <Mr.MudBean@outlook.com>
@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 18:44
  * @version 1.1.0
- * @lastModified 2026-01-31 07:55
+ * @lastModified 2026-02-01 01:22
  *
  * 当配置包名时，后自动创建包的工作路径
  */
@@ -22,8 +22,10 @@ import {
 import { isNull, isUndefined } from 'a-type-of-js';
 import { CommandParameters, Dependencies } from '../types';
 import { dog, dun } from '../utils/dog';
-import { exitProgram } from '../utils/index';
+
+import { exitProgram } from '../utils/exit-program';
 import { commandParameters } from './command-parameters';
+import { deLi } from './dependencies-version';
 import { FileName } from './file-name-enum';
 import { originDependencies } from './origin-dependencies';
 
@@ -190,88 +192,72 @@ class DataStore {
      * 通过一种很二的方式来添加
      * @param list 依赖数组
      */
-    const merge = function (this: Dependency, list: Dependency) {
-      const keys = Object.keys(list);
-      keys.forEach(key => (this[key] = devDe?.[key] || list[key]));
+    const merge = function (this: Dependency, list: string[]) {
+      // 设计冗余，两份数据本就属于同一份数据
+      list.forEach(item => (this[item] = devDe?.[item] || deLi[item]));
     }.bind(result);
 
-    merge({
-      '@eslint/js': '^9.39.2',
-      '@qqi/check-version': '^1.1.0',
-      '@qqi/rollup-external': '^1.1.0',
-      '@rollup/plugin-commonjs': '^29.0.0',
-      '@rollup/plugin-json': '^6.1.0',
-      '@rollup/plugin-node-resolve': '^16.0.3',
-      '@rollup/plugin-terser': '^0.4.4',
-      '@rollup/plugin-typescript': '^12.3.0',
-      gvv: '^1.0.0',
-      jja: '^2.4.0',
-      pjj: '^1.0.5',
-      rollup: '^4.55.1',
-      'rollup-plugin-cleanup': '^3.2.1',
-      'rollup-plugin-copy': '^3.5.0',
-      vjj: '^1.0.12',
-      '@color-pen/static': '^1.1.1',
-      '@qqi/log': '^1.0.0',
-      'a-command': '^3.0.1',
-      'a-js-tools': '^2.0.1',
-      'a-node-tools': '^4.4.2',
-      'a-type-of-js': '^2.0.0',
-      'color-pen': '^3.0.0',
-      'colored-table': '^0.2.0',
-      qqi: '^1.0.0',
-    });
+    merge([
+      '@color-pen/static',
+      '@eslint/js',
+      '@qqi/check-version',
+      '@qqi/rollup-external',
+      '@rollup/plugin-commonjs',
+      '@rollup/plugin-json',
+      '@rollup/plugin-node-resolve',
+      '@rollup/plugin-terser',
+      '@rollup/plugin-typescript',
+      'gvv',
+      'jja',
+      'pjj',
+      'rollup',
+      'rollup-plugin-cleanup',
+      'rollup-plugin-copy',
+      'rollup-plugin-typescript2',
+      'vjj',
+      '@qqi/log',
+      'a-command',
+      'a-js-tools',
+      'a-node-tools',
+      'a-type-of-js',
+      'color-pen',
+      'colored-table',
+      'qqi',
+    ]);
 
     if (de.includes('husky') && de.includes('prettier')) {
-      merge({
-        husky: '^9.1.7',
-        'lint-staged': '^16.2.7',
-      });
+      merge(['husky', 'lint-staged']);
     }
 
     if (de.includes('eslint')) {
-      merge({
-        // eslint 核心
-        eslint: '^9.39.2',
-        'eslint-config-prettier': '^10.1.8',
+      merge([
+        'eslint',
+        'eslint-config-prettier',
         // 注释文档审视
-        'eslint-plugin-jsdoc': '^62.0.0',
+        'eslint-plugin-jsdoc',
         // 其他需要的两个依赖
-        globals: '^17.0.0',
-        '@eslint/js': '^9.39.2',
-        'eslint-plugin-import': '^2.32.0',
-        'eslint-plugin-jsonc': '^2.21.0',
-        'eslint-plugin-unused-imports': '^4.3.0',
-        'eslint-import-resolver-typescript': '^4.4.4',
-      });
+        'globals',
+        '@eslint/js',
+        'eslint-plugin-import',
+        'eslint-plugin-jsonc',
+        'eslint-plugin-unused-imports',
+        'eslint-import-resolver-typescript',
+      ]);
 
       // eslint typescript 支持
-      if (de.includes('typescript'))
-        merge({
-          'typescript-eslint': '^8.53.0',
-        });
+      if (de.includes('typescript')) merge(['typescript-eslint']);
 
       // eslint prettier 支持
-      if (de.includes('prettier'))
-        merge({
-          'eslint-config-prettier': '^10.1.8',
-        });
+      if (de.includes('prettier')) merge(['eslint-config-prettier']);
     }
 
     // 如果需要格式化
-    if (de.includes('prettier'))
-      merge({
-        prettier: '^3.8.0',
-      });
+    if (de.includes('prettier')) merge(['prettier']);
 
     // 如果需要 ts
-    if (de.includes('typescript')) {
-      merge({
-        '@types/node': '^25.0.9',
-        '@rollup/plugin-node-resolve': '^16.0.3',
-        typescript: '^5.9.3',
-      });
-    }
+    if (de.includes('typescript'))
+      merge(['@types/node', '@rollup/plugin-node-resolve', 'typescript']);
+
     delete result.merge; // 移除工具函数
     if (dun) {
       dog('构建的依赖图', result);

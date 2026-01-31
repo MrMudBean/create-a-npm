@@ -8,8 +8,8 @@ import {
 } from 'a-type-of-js';
 import { dataStore } from '../data-store/index';
 import { LocalConfig } from '../types';
-import { exitProgram } from '../utils';
 import { dog } from '../utils/dog';
+import { exitProgram } from '../utils/exit-program';
 import { qqi } from '../utils/qqi';
 
 /**  问询是否使用上一次的配置  */

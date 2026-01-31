@@ -12,7 +12,7 @@ import { brightRedPen, greenPen, hexPen, magentaPen } from 'color-pen';
 import { dataStore } from './data-store/index';
 import { command } from './utils/command';
 import { dog, dun } from './utils/dog';
-import { exitProgram } from './utils/index';
+import { exitProgram } from './utils/exit-program';
 import { waiting } from './utils/waiting';
 
 /**
@@ -76,8 +76,8 @@ async function waitInputName(): Promise<string> {
     maxLen: 212,
     verify: [
       {
-        reg: /^[a-z@]/,
-        info: '首字符应为小写英文字符或 @',
+        reg: /^[a-z0-9@]/,
+        info: '首字符应为小写英文字符、数字或 @',
       },
       {
         reg: /[A-Z]/,
@@ -87,6 +87,11 @@ async function waitInputName(): Promise<string> {
       {
         reg: /^[^@].*\/.*/,
         info: `仅当为范围时才可以包含 ${magentaPen`/`} 符号`,
+        inverse: true,
+      },
+      {
+        reg: /\/$/,
+        info: `不能以 ${magentaPen`/`} 符号结尾`,
         inverse: true,
       },
       {
@@ -100,8 +105,13 @@ async function waitInputName(): Promise<string> {
         inverse: true,
       },
       {
+        reg: /^@[^/]+$/,
+        info: '域后必须携带子包名',
+        inverse: true,
+      },
+      {
         reg: /^[a-z0-9@/\-_.]+$/,
-        info: `仅允许 ${magentaPen`-`}、${magentaPen`_`} 字符出现`,
+        info: `仅允许 ${magentaPen`-`}、${magentaPen`_`} 特殊字符`,
       },
     ],
   });
@@ -180,18 +190,19 @@ async function createCatalog(pkgName: string): Promise<boolean> {
 
   dog('获取线上的 npm 包数据', pkgInfo);
   if (pkgInfo.data) {
-    const tip = ['更改为其他名称', '忽视并继续', '直接退出'];
-    const response = await question({
-      text: hexPen(
+    const data = ['更改为其他名称', '忽视并继续', '直接退出'];
+    const response = await selection({
+      info: hexPen(
         '#f63',
       )`当前包名称（${magentaPen(pkgName)}）已经存在于 npm 中`,
-      tip,
+      data,
     });
-    if (isUndefined(response) || response === tip[2]) {
+    dog('用户选择：', response);
+    if (isUndefined(response) || response === data[2]) {
       return await exitProgram();
     }
-    // 仅处理再输入
-    if (response === tip[0]) return false;
+    // 仅处理再输入（返回让用户重新输入）
+    if (response === data[0]) return false;
   }
 
   dataStore.name = pkgName; /// 将包名赋值给 data

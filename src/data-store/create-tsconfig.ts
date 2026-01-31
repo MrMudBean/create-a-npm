@@ -1,17 +1,15 @@
 /**
- * @packageDocumentation
  * @module @create-a-npm/create-tsconfig
  * @file create-tsconfig.ts
- * @description _
+ * @description 构建 typescript 的配置文件
  * @author MrMudBean <Mr.MudBean@outlook.com>
  * @license MIT
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 16:38
  * @version 1.2.0
- * @lastModified 2026-01-31 08:01
+ * @lastModified 2026-02-01 01:41
  */
 
-import { WriteToFileKind } from '../types';
 import { FileName } from './file-name-enum';
 import { dataStore } from './index';
 
@@ -56,11 +54,12 @@ export function createTsconfigBaseText() {
 
 /**
  * ## 构建 ts 类型构建文件
- * @param kind
  */
-export function createTsconfigTypeText(kind: WriteToFileKind = 'pkg') {
+export function createTsconfigTypeText() {
   return `{
-  "extends": "./${kind === 'pkg' ? FileName.TSCONFIG : FileName.TSCONFIG_ROLLUP}",
+  "extends": "./${
+    dataStore.workspace ? FileName.TSCONFIG_ROLLUP : FileName.TSCONFIG
+  }",
   "compilerOptions": {
     "declaration": true, // 生成类型文件
     "declarationDir": "dist",
@@ -69,7 +68,7 @@ export function createTsconfigTypeText(kind: WriteToFileKind = 'pkg') {
     "rootDir": "."
   },
   "include": ["src/"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts", "eg", "jest.setup.ts"]
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "eg", "jest.setup.ts" , "scripts/"]
 }
 `;
 }
@@ -83,7 +82,7 @@ export function createTsConfigText() {
     "compilerOptions": {
       "rootDir": "."
     },
-    "include": ["index.ts", "src/", "**.d.ts", "test/**/*.ts"],
+    "include": ["index.ts", "src/", "**.d.ts", "test/**/*.ts", "scripts/", "eg/"],
     "exclude": ["node_modules", "dist"]
   }`;
 }
