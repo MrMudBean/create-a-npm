@@ -1,13 +1,13 @@
-import { selection } from 'a-command';
-import { enArr } from 'a-js-tools';
+import { selection } from '@vvi/command';
 import {
   isArray,
   isBusinessEmptyString,
   isEmptyArray,
   isUndefined,
-} from 'a-type-of-js';
+} from '@vvi/is';
+import { enArr } from '@vvi/utils';
 import { dataStore } from '../data-store/index';
-import { LocalConfig } from '../types';
+import type { LocalConfig } from '../types';
 import { dog } from '../utils/dog';
 import { exitProgram } from '../utils/exit-program';
 import { qqi } from '../utils/qqi';

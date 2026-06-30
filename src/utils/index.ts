@@ -7,11 +7,11 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-28 12:55
  * @version 1.1.0
- * @lastModified 2026-02-01 02:03
+ * @lastModified 2026-06-29 19:37
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { _p, writeJsonFileSync } from 'a-node-tools';
-import { randomPen } from 'color-pen';
+import { _p, writeJsonFileSync } from '@vvi/node';
+import { randomPen } from '@vvi/pen';
 import { dataStore } from '../data-store';
 import { commandParameters } from '../data-store/command-parameters';
 import { gitIgnoreText } from '../data-store/create-git-ignore-text';
@@ -27,26 +27,22 @@ import { FileName } from '../data-store/file-name-enum';
 import { licenseText } from '../data-store/license-text';
 import { prettierText } from '../data-store/prettierText';
 import { createRollupText } from '../data-store/rollup-text';
-import { WriteToFileKind } from '../types';
+import type { WriteToFileKind } from '../types';
 
 /**
  * ## 打印一些内容
  * @param message  {@link  String} 将要打印的信息
  * @returns void
- *
  */
 export function printSome(message: string): undefined {
   _p(randomPen(new Date().toLocaleTimeString().concat(message)));
 }
 
 /**
- *
- *  写入 json 文件
- *
+ * # 写入 json 文件
  * @param fileName  {@link string} 写入的文件名
  * @param jsonData  写入的数据
  * @returns void
- *
  */
 export function writeToJsonFile(fileName: string, jsonData: unknown): void {
   writeJsonFileSync(dataStore.pkgFile(fileName), jsonData as never);

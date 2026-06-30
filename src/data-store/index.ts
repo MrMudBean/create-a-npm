@@ -7,20 +7,21 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 18:44
  * @version 1.1.0
- * @lastModified 2026-02-01 01:22
+ * @lastModified 2026-06-29 19:39
  *
  * 当配置包名时，后自动创建包的工作路径
  */
-import { enArr } from 'a-js-tools';
+import { isNull, isUndefined } from '@vvi/is';
+import type {
+  PackageJson} from '@vvi/node';
 import {
   getDirectoryBy,
   initializeFile,
-  PackageJson,
   pathJoin,
   readFileToJsonSync,
-} from 'a-node-tools';
-import { isNull, isUndefined } from 'a-type-of-js';
-import { CommandParameters, Dependencies } from '../types';
+} from '@vvi/node';
+import { enArr } from '@vvi/utils';
+import type { CommandParameters, Dependencies } from '../types';
 import { dog, dun } from '../utils/dog';
 
 import { exitProgram } from '../utils/exit-program';

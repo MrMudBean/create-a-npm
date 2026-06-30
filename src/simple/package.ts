@@ -1,4 +1,4 @@
-import { PackageJson } from 'a-node-tools';
+import type { PackageJson } from '@vvi/node';
 import { dataStore } from '../data-store';
 import { FileName } from '../data-store/file-name-enum';
 import { appendPackageScripts, writeToFile } from '../utils';

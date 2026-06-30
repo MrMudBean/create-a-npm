@@ -1,8 +1,9 @@
 import { userInfo } from 'node:os';
-import { question, selection, SelectionParamObjectData } from 'a-command';
-import { runOtherCode } from 'a-node-tools';
-import { isBusinessEmptyString, isType, isUndefined } from 'a-type-of-js';
-import { brightBlackPen } from 'color-pen';
+import type { SelectionParamObjectData } from '@vvi/command';
+import { question, selection } from '@vvi/command';
+import { isBusinessEmptyString, isType, isUndefined } from '@vvi/is';
+import { runOtherCode } from '@vvi/node';
+import { brightBlackPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
 import { dog, dun } from '../utils/dog';
 import { exitProgram } from '../utils/exit-program';

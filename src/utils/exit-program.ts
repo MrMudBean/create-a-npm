@@ -7,10 +7,10 @@
  * @copyright 2026 ©️ Mr.MudBean
  * @since 2026-01-31 19:15
  * @version 1.2.1
- * @lastModified 2026-01-31 19:16
+ * @lastModified 2026-06-29 19:37
  */
 
-import { cursorAfterClear, cursorShow, typewrite } from 'a-node-tools';
+import { cursorAfterClear, cursorShow, typewrite } from '@vvi/node';
 import { command } from './command';
 import { waiting } from './waiting';
 
@@ -20,7 +20,7 @@ import { waiting } from './waiting';
  */
 export async function exitProgram(
   message: string = '好的，正在做退出前最后的工作，请稍等',
-): Promise<never> {
+): Promise<any> {
   await typewrite(message);
   waiting.destroyed();
   cursorAfterClear();

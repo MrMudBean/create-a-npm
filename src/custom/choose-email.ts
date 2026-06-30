@@ -1,7 +1,8 @@
-import { question, selection, SelectionParamObjectData } from 'a-command';
-import { runOtherCode } from 'a-node-tools';
-import { isBusinessEmptyString, isType, isUndefined } from 'a-type-of-js';
-import { brightBlackPen } from 'color-pen';
+import type { SelectionParamObjectData } from '@vvi/command';
+import { question, selection } from '@vvi/command';
+import { isBusinessEmptyString, isType, isUndefined } from '@vvi/is';
+import { runOtherCode } from '@vvi/node';
+import { brightBlackPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
 import { dun, dog } from '../utils/dog';
 import { exitProgram } from '../utils/exit-program';
@@ -22,7 +23,7 @@ export async function chooseEmail() {
 }
 
 /**
- *  获取 git 配置的用户邮箱
+ * # 获取 git 配置的用户邮箱
  * @param data
  */
 async function getGitConfigUserEmail(
@@ -51,7 +52,7 @@ async function getGitConfigUserEmail(
 }
 
 /**
- *  由用户名构建
+ * # 由用户名构建
  * @param data
  */
 function createByName(data: SelectionParamObjectData<string | symbol>[]) {
@@ -70,7 +71,7 @@ function createByName(data: SelectionParamObjectData<string | symbol>[]) {
 }
 
 /**
- *  选择要使用的用户名
+ * # 选择要使用的用户名
  * @param data
  * @param value
  */

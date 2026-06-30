@@ -1,4 +1,4 @@
-import { waitingTips } from 'a-node-tools';
+import { waitingTips } from '@vvi/node';
 
 /**  等待  */
 export const waiting = waitingTips({

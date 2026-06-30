@@ -1,6 +1,6 @@
-import { selection } from 'a-command';
-import { isUndefined } from 'a-type-of-js';
-import { greenPen } from 'color-pen';
+import { selection } from '@vvi/command';
+import { isUndefined } from '@vvi/is';
+import { greenPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
 
 /**  询问是否包含 bin 可执行  */

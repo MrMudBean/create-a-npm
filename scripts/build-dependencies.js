@@ -7,11 +7,11 @@
  * @copyright 2026 ©️ Mr.MudBean
  * @since 2026-02-01 00:32
  * @version 1.2.1
- * @lastModified 2026-02-01 00:46
+ * @lastModified 2026-06-30 00:20
  */
 
-import { getPackageJsonSync } from 'a-node-tools';
-import { isNull } from 'a-type-of-js';
+import { getPackageJsonSync } from '@vvi/node';
+import { isNull } from '@vvi/is';
 import { writeFileSync } from 'node:fs';
 
 const pack = getPackageJsonSync();

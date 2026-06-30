@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 16:38
  * @version 1.2.0
- * @lastModified 2026-02-01 01:41
+ * @lastModified 2026-07-01 01:42
  */
 
 import { FileName } from './file-name-enum';
@@ -82,7 +82,7 @@ export function createTsConfigText() {
     "compilerOptions": {
       "rootDir": "."
     },
-    "include": ["index.ts", "src/", "**.d.ts", "test/**/*.ts", "scripts/", "eg/"],
+    "include": ["index.ts", "src/", "**.d.ts", "eg/**/*.ts", "scripts/", "eg/"],
     "exclude": ["node_modules", "dist"]
   }`;
 }

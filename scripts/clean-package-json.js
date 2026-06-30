@@ -1,5 +1,5 @@
-import { pathJoin, writeJsonFileSync, getPackageJsonSync } from 'a-node-tools';
-import { isNull } from 'a-type-of-js';
+import { pathJoin, writeJsonFileSync, getPackageJsonSync } from '@vvi/node';
+import { isNull } from '@vvi/is';
 import { dirname } from 'node:path';
 
 const packageJsonResponse = getPackageJsonSync();

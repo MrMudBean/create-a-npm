@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 13:45
  * @version 1.1.0
- * @lastModified 2026-01-30 19:27
+ * @lastModified 2026-07-01 00:36
  *
  * 该操作出现在命名完成后
  */
@@ -41,8 +41,9 @@ export async function createNpm(): Promise<void> {
     if (dataStore.withRoot) createRange();
     createChild();
     return;
+  } else {
+    // 包下文件
+    packageIndex();
+    return;
   }
-
-  // 包下文件
-  packageIndex();
 }

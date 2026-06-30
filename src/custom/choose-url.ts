@@ -1,6 +1,7 @@
-import { question, selection, SelectionParamObjectData } from 'a-command';
-import { isBusinessEmptyString, isType, isUndefined } from 'a-type-of-js';
-import { brightBlackPen } from 'color-pen';
+import type { SelectionParamObjectData } from '@vvi/command';
+import { question, selection } from '@vvi/command';
+import { isBusinessEmptyString, isType, isUndefined } from '@vvi/is';
+import { brightBlackPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
 import { dog, dun } from '../utils/dog';
 

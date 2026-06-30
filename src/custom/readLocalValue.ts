@@ -1,8 +1,8 @@
-import { SelectionParamObjectData } from 'a-command';
-import { isBusinessEmptyString } from 'a-type-of-js';
-import { greenPen } from 'color-pen';
+import type { SelectionParamObjectData } from '@vvi/command';
+import { isBusinessEmptyString } from '@vvi/is';
+import { greenPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
-import { LocalConfig } from '../types';
+import type { LocalConfig } from '../types';
 import { qqi } from '../utils/qqi';
 
 /**

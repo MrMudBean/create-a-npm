@@ -46,12 +46,7 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-
-      - name: clean npm auth
-        run: |
-          npm config delete //registry.npmjs.org/:_authToken
-          rm -f ~/.npmrc
-        shell: bash
+          always-auth: false
 
       - name: pnpm 安装
         uses: pnpm/action-setup@v2

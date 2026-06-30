@@ -7,11 +7,11 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 13:04
  * @version 1.1.0
- * @lastModified 2026-01-30 18:12
+ * @lastModified 2026-06-29 19:38
  */
-import { Args } from 'a-command';
+import { Args } from '@vvi/command';
 import { commandParameters } from '../data-store/command-parameters';
-import { acceptManagerValue } from '../types';
+import type { acceptManagerValue } from '../types';
 import { dog } from './dog';
 
 const command = new Args<{

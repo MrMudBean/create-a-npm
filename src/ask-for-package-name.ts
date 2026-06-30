@@ -1,14 +1,14 @@
 import { mkdirSync } from 'node:fs';
-import { question, selection } from 'a-command';
-import { sleep } from 'a-js-tools';
+import { question, selection } from '@vvi/command';
+import { isBusinessEmptyString, isFalse, isUndefined } from '@vvi/is';
 import {
   detectPackageManager,
   getNpmPkgInfo,
   isEmptyDir,
   isWorkSpace,
-} from 'a-node-tools';
-import { isBusinessEmptyString, isFalse, isUndefined } from 'a-type-of-js';
-import { brightRedPen, greenPen, hexPen, magentaPen } from 'color-pen';
+} from '@vvi/node';
+import { brightRedPen, greenPen, hexPen, magentaPen } from '@vvi/pen';
+import { sleep } from '@vvi/utils';
 import { dataStore } from './data-store/index';
 import { command } from './utils/command';
 import { dog, dun } from './utils/dog';
@@ -16,7 +16,6 @@ import { exitProgram } from './utils/exit-program';
 import { waiting } from './utils/waiting';
 
 /**
- *
  * @description 查看是否当前有项目名
  * @param [firstCall=true]  是否是第一次调用，因为在名称不符合时将递归调用
  * @returns  Promise<void>>   没有返回值
@@ -135,8 +134,6 @@ async function nameIsNotEligible() {
 
 /**
  * ## 目录审视及构建目录
- *
- *
  * @param pkgName 包名
  */
 async function createCatalog(pkgName: string): Promise<boolean> {
@@ -215,7 +212,7 @@ async function createCatalog(pkgName: string): Promise<boolean> {
 }
 
 /**
- *  携带域时候的判断
+ * # 携带域时候的判断
  * @param pkgName
  */
 async function carryRange(pkgName: string) {
@@ -260,7 +257,6 @@ async function carryRange(pkgName: string) {
 
 /**
  * ## 设置当前携带工作区的根
- *
  * @param value
  */
 function setWithRoot(value: boolean) {

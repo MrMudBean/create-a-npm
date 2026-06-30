@@ -1,27 +1,27 @@
 import { unlinkSync } from 'node:fs';
-import { selection } from 'a-command';
+import { selection } from '@vvi/command';
+import { isEmptyString, isUndefined } from '@vvi/is';
 import {
   _p,
   detectPackageManager,
   pathJoin,
   runOtherCode,
   writeJsonFileSync,
-} from 'a-node-tools';
-import { isEmptyString, isUndefined } from 'a-type-of-js';
+} from '@vvi/node';
 import {
   brightBlackPen,
   brightGreenPen,
   cyanPen,
   greenPen,
   magentaPen,
-} from 'color-pen';
+} from '@vvi/pen';
 import { askForName } from './ask-for-package-name';
 import { createNpm } from './createNpm';
 import custom from './custom';
 import { dataStore } from './data-store';
 import { commandParameters } from './data-store/command-parameters';
 
-import { acceptManagerValue } from './types';
+import type { acceptManagerValue } from './types';
 import { parse } from './utils/command';
 import { dog } from './utils/dog';
 import { exitProgram } from './utils/exit-program';

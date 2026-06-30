@@ -2,9 +2,6 @@
 
 [![version](<https://img.shields.io/npm/v/create-a-npm.svg?logo=npm&logoColor=rgb(0,0,0)&label=版本号&labelColor=rgb(73,73,228)&color=rgb(0,0,0)>)](https://www.npmjs.com/package/create-a-npm) [![issues 提交](<https://img.shields.io/badge/issues-提交-rgb(255,0,63)?logo=github>)](https://github.com/MrMudBead/create-a-npm/issues)
 
-> [info]
-> 广告时间到，推荐 [vscode 插件](https://marketplace.visualstudio.com/items?itemName=MrMudBean.auto-last-modified) 自动添加文件头部注释
-
 ## 安装
 
 该库不安装亦可直接使用 `npm create a-npm` 全局使用，如果你非要安装的话，就：
@@ -130,6 +127,8 @@ npm create a-npm -- -m=yarn
 
 在快结束的时候会提醒是否直接安装依赖包，该步骤可被跳过。完成或跳过该步骤即完成了简单的包创建
 
-## 📄 文档地址
+## 状态
 
-参看 [https://earthnut.dev/npm/create-a-npm/](https://earthnut.dev/npm/create-a-npm/)
+此软件包是 `MrMudBean` 生态系统的一部分。
+它使用严格的 TypeScript 编写，并通过 Rollup 构建进行验证。
+虽然单元测试较少，但 API 稳定，并在生产环境中大量使用。

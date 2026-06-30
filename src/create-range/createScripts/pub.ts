@@ -15,29 +15,31 @@ UPDATE_PACKAGES=$UPDATE_PACKAGES
 REPO_ROOT=$REPO_ROOT
 # 发布异常的包
 PUB_ERROR=()
-CHECK_VERSION="@qqi/check-version"
-# 读取版本检测是否可用
-source ./scripts/check_version_install.sh 
+CHECK_VERSION="@vvi/check-version"
 echo "工作根路径 $REPO_ROOT"
 PACKAGES_DIR="\${REPO_ROOT}/packages"
 # 将字符串转为数组
 IFS=',' read -r -a PACKAGE_ARRAY <<< "$UPDATE_PACKAGES"
+
+log_info() { echo -e "\${GREEN}[INFO]\${NC} $1"; }
+log_warn() { echo -e "\${YELLOW}[WARN]\${NC} $1"; }
+log_error() { echo -e "\${RED}[ERROR]\${NC} $1"; }
  
 update_version() {
     local input="$1"
     local NAME=$(echo "\${input//-/ }" | tr -s ' ') # 替换 - 为空格并删除重复的空格
     local CWD="\${PACKAGES_DIR}/$input"
 
-    local tag=""
+    local TAG=""
     cd $REPO_ROOT # 每次需要手动更新到根下才能正确的校验版本号
-    if ! tag=$(npx "\${CHECK_VERSION}" n=\${input} 2>&1); then
-       echo "未通过版本校验：$tag"
+    if ! TAG=$(npx --yes "\${CHECK_VERSION}" n=\${input} 2>&1); then
+       log_error "未通过版本校验：$TAG"
        return 0 
     fi
-    echo "获取 \${NAME} 的发布标签为 \${tag}"
+    log_info "获取 \${NAME} 的发布标签为 \${TAG}"
 
     if [ ! -d "$CWD" ]; then 
-        echo "进入项目 $NAME 故障，路径为 \${CWD}"
+        log_error "进入项目 $NAME 故障，路径为 \${CWD}"
         return 0
     fi
     cd "$CWD"
@@ -45,53 +47,47 @@ update_version() {
     # 依赖安装 
     ${createCI()}
     if ! ${manager.value} run build; then 
-      echo "构建 $NAME 失败" 
+      log_error "构建 $NAME 失败" 
       PUB_ERROR+=("$input")
       return 0
     fi
     local BUILD_DIST="\${CWD}/dist"
     if [ ! -d "\${BUILD_DIST}" ]; then
-      echo "未找到 $NAME dist 构建：\${BUILD_DIST}"
+      log_warn "未找到 $NAME dist 构建：\${BUILD_DIST}"
       PUB_ERROR+=("$input")
       return 0
     fi
     cd "\${BUILD_DIST}" 
     
-    echo "开始发布 $NAME npm 包 \${tag} 版本"
-    if ! ${manager.value} publish --provenance --access public --tag "\${tag}" --no-git-checks; then
-        echo "💥💥💥 $NAME 发布到 npm 💥💥💥"
+    log_info "开始发布 $NAME npm 包 \${TAG} 版本"
+    if ! ${manager.value} publish --provenance --access public --tag "\${TAG}" --no-git-checks; then
+        log_error "💥💥💥 $NAME 发布到 npm 💥💥💥"
         PUB_ERROR+=("$input")
     else 
-        echo "🪧 $package  发布终结 🫧🫧🫧🫧🫧🫧"
+        log_info "🪧 $package  发布终结 🫧🫧🫧🫧🫧🫧"
     fi
 }
 
 main() {
-    # 校验版本可用情况
     if [ ! -d "$PACKAGES_DIR" ]; then
-      echo "没有找到 \${PACKAGES_DIR}"
+      log_error "没有找到 \${PACKAGES_DIR}"
       exit 0
     fi
-    echo "☁️ 来"
-    install_check_version # 检查版本包安装校验
     # 遍历变更的包数组，进行 npm 包推送
-    # "\${ARR[@]}" 引用数组所有元素
-    # "\${!ARR[@]}" 引用数组所有索引 \${ARR[$index]}
-    # "\${#ARR[@]}" 数组长度 
     for package in "\${PACKAGE_ARRAY[@]}"; do
-        echo "当前执行的推送为 $package"
+        log_info "当前执行的推送为 $package"
         update_version "$package"
     done
 
 }
 
-echo "准备好了么"
+log_info "准备好了么"
 main
 if [ \${#PUB_ERROR[@]} -gt 0 ]; then 
-   echo "发布包 \${PUB_ERROR[@]} 异常 "
+   log_warn "发布包 \${PUB_ERROR[@]} 异常 "
 else 
-   echo "所有发布均已成功：\${PACKAGE_ARRAY[@]}"
-   echo "🚀🚀 发布成功，完结 🎉🎉 撒花 🎉🎉"
+   log_info "所有发布均已成功：\${PACKAGE_ARRAY[@]}"
+   long_info "🚀🚀 发布成功，完结 🎉🎉 撒花 🎉🎉"
 fi`,
     'range',
   );

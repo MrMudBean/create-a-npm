@@ -19,7 +19,7 @@ while IFS= read -r PACKAGE_DIR; do
    CHANGED_PACKAGE_ARRAY+=("$PACKAGE_DIR")
 done < <(find packages -mindepth 1 -maxdepth 1 -type d -exec basename {} \\;)
 
-check_version() {
+check_package() {
   local input="$1"
   local NAME=$(echo "\${input//-/ }" | tr -s ' ') # 替换 - 为空格并删除重复的空白字符
   echo "输入：\${input}"
@@ -39,7 +39,7 @@ check_version() {
 
 main() {
   for PACKAGE_NAME in \${CHANGED_PACKAGE_ARRAY[@]}; do 
-     check_version "$PACKAGE_NAME"
+     check_package "$PACKAGE_NAME"
   done
 
   echo "校验版本数据完毕 \${UPDATE_PACKAGE_ARRAY}"

@@ -1,3 +1,8 @@
+
+/*** 
+ * 该文件已废弃
+ */
+
 import { FileName } from '../../data-store/file-name-enum';
 import { writeToFile } from '../../utils/index';
 

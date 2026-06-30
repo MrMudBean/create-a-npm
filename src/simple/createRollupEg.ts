@@ -21,7 +21,7 @@ export default {
   input: './${ts ? FileName.EG_INDEX_TS : FileName.EG_INDEX_JS}',
   output: {
     format: 'es',
-    entryFileNames: '[name].mjs',
+    entryFileNames: '[name].js',
     preserveModules: false,
     sourcemap: false,
     exports: 'named',

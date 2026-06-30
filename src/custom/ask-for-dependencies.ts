@@ -1,9 +1,10 @@
-import { selection, SelectionParamData } from 'a-command';
-import { isUndefined } from 'a-type-of-js';
-import { greenPen } from 'color-pen';
+import type { SelectionParamData } from '@vvi/command';
+import { selection } from '@vvi/command';
+import { isUndefined } from '@vvi/is';
+import { greenPen } from '@vvi/pen';
 import { dataStore } from '../data-store/index';
 import { originDependencies } from '../data-store/origin-dependencies';
-import { Dependencies } from '../types';
+import type { Dependencies } from '../types';
 import { dog } from '../utils/dog';
 import { qqi } from '../utils/qqi';
 

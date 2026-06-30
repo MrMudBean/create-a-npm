@@ -8,11 +8,11 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 08:09
  * @version 1.2.0
- * @lastModified 2026-01-30 09:26
+ * @lastModified 2026-07-01 01:12
  */
 
 import { mkdirSync } from 'node:fs';
-import { pathJoin } from 'a-node-tools';
+import { pathJoin } from '@vvi/node';
 import { dataStore } from './index';
 
 /**
@@ -33,7 +33,7 @@ export function createScriptCleanPackage() {
     fileExist,`
       : ''
   }
-} from 'a-node-tools';
+} from '@vvi/node';
 ${
   bin !== 1
     ? `import { readdirSync } from 'node:fs';
@@ -51,12 +51,13 @@ const dependencies = packageJson.dependencies;
   'lint-staged',
   'private',
   'dependencies',
+  'packageManager',
 ].forEach(key => delete packageJson[key]);
   ${
     bin !== 1
       ? `const esPrefix = 'es'; // es 前缀
 const cjsPrefix = 'cjs'; // cjs 前缀
-const dtsPrefix = 'es/src'; // 类型文件的前缀
+const dtsPrefix = 'es'; // 类型文件的前缀
 // 查看当前打包 dist 文件路径
 const distParentPath = getDirectoryBy('dist', 'directory');
 // <--  !!! -->
@@ -87,23 +88,30 @@ for (const childrenName of srcChildrenList) {
   const childrenBaseName = basename(childrenName, extname(childrenName));
   // 子文件/夹的路径
   const childPath = pathJoin(srcDirectory, childrenName);
-
   const childFile = fileExist(childPath); // 文件元数据
   if (!childFile) throw new RangeError(\`\${childrenName} 文件未能读取\`);
   // 子文件是文件夹时以 index.xxx.js 为准
   if (childFile.isDirectory()) {
     exportsList[\`./\${childrenBaseName}\`] = {
-      default: \`./\${esPrefix}/\${childrenName}/index.js\`,
-      import: \`./\${esPrefix}/\${childrenName}/index.js\`,
-      require: \`./\${cjsPrefix}/\${childrenName}/index.js\`,
-      types: \`./\${dtsPrefix}/\${childrenName}/index.d.ts\`,
+      import: {
+        default: \`./\${esPrefix}/\${childrenName}/index.js\`,
+        types: \`./\${dtsPrefix}/\${childrenName}/index.d.ts\`,
+      },
+      require: {
+        default: \`./\${cjsPrefix}/\${childrenName}/index.js\`,
+        types: \`./\${dtsPrefix}/\${childrenName}/index.d.ts\`,
+      },
     };
   } else if (childFile.isFile()) {
     exportsList[\`./\${childrenBaseName}\`] = {
-      default: \`./\${esPrefix}/\${childrenBaseName}.js\`,
-      import: \`./\${esPrefix}/\${childrenBaseName}.js\`,
-      require: \`./\${cjsPrefix}/\${childrenBaseName}.js\`,
-      types: \`./\${dtsPrefix}/\${childrenBaseName}.d.ts\`,
+      import: {
+        default: \`./\${esPrefix}/\${childrenBaseName}.js\`,
+        types: \`./\${dtsPrefix}/\${childrenBaseName}.d.ts\`,
+      },
+      require: {
+        default: \`./\${cjsPrefix}/\${childrenBaseName}.js\`,
+        types: \`./\${dtsPrefix}/\${childrenBaseName}.d.ts\`,
+      },
     };
   } else {
     throw new RangeError(\`\${childrenName} 文件类型不符合要求\`);
@@ -116,9 +124,9 @@ packageJson = {
   ${
     // 当非完全执行库
     bin !== 1
-      ? `main: \`\${cjsPrefix}/index.js\`,
-    module: \`\${esPrefix}/index.mjs\`,
-    types: 'index.d.ts',`
+      ? `  main: cjsPrefix + '/index.js', // 旧版本 CommonJs 入口
+  module: esPrefix + '/index.js', // 旧版本 ESM 入口
+  types: dtsPrefix + '/index.d.ts', // 旧版本类型入口`
       : ''
   }
   author: {
@@ -126,25 +134,26 @@ packageJson = {
     email: '${author.email}',
     url: '${author.url}',
   },
-  sideEffects: false, // 如果是 react 等库包，可能需要使用 ['*.css' ,'*.scss' ,'*.sass', '*.less'] 或其他
   description: '',
+  sideEffects: false, // 如果是 react 等库包，可能需要使用 ['*.css' ,'*.scss' ,'*.sass', '*.less'] 或其他
   license: 'MIT',
-  files: [${bin !== 1 ? 'cjsPrefix, esPrefix ,' : ''} ${bin !== 0 ? 'bin.js ,' : ''} 'LICENSE', 'README.md'],
+  files: [${bin !== 1 ? 'cjsPrefix, esPrefix ,' : ''} ${bin !== 0 ? 'bin.js ,' : ''} 'LICENSE', 'README.md', 'CHANGELOG.md'],
   exports: {
     '.': {
       import: {
-        default: './index.mjs',
-        types: './index.d.ts',
+        default: \`./\${esPrefix}/index.js\`,
+        types: \`./\${dtsPrefix}/index.d.ts\`,
       },
       require: {
-        default: './index.cjs',
-        types: './index.d.ts',
+        default: \`./\${cjsPrefix}/index.js\`,
+        types: \`./\${dtsPrefix}/index.d.ts\`,
       },
     },
+    ...exportsList,
   },
   keywords: ['${name}', '${nameList[0]}'],
   homepage: '${author.url.startsWith('http') ? author.url : 'https://'.concat(author.url)}',
-  dependencies,
+  dependencies: dependencies,
   bugs: {
     url: 'https://github.com/${author.name}/${name}/issues',
     email: '${author.email}',

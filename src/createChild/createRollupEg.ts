@@ -20,7 +20,7 @@ export default {
   input: './eg/index.${ts ? 'ts' : 'js'}',
   output:{
     format: 'es',
-    entryFileNames: '[name].mjs',
+    entryFileNames: '[name].js',
     preserveModules: false,
     sourcemap: false,
     exports: 'named',

@@ -1,5 +1,5 @@
-import { question } from 'a-command';
-import { isUndefined } from 'a-type-of-js';
+import { question } from '@vvi/command';
+import { isUndefined } from '@vvi/is';
 import { dataStore } from '../data-store/index';
 
 /**  询问是否安装依赖  */

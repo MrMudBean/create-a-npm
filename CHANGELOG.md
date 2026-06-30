@@ -1,4 +1,20 @@
-# 构建一个符合泥豆君规则的 npm 简单包
+# 日志
+
+## 1.2.2 (2026-6-29)
+
+- 移除构建中 sh 检测 @qqi/check-version 部分及全局安装，使用 npx --yes 即可
+- 更新 tsx 构建路径 /es/type -> /es
+- 添加 'CHANGELOG.md' 到打包发布包
+- 维护 clean-package-json 文件中 types 导出路径错误
+- 维护 clean-package-json 文件中 exports 导出 . 的 default 错误
+- 维护 clean-package-json 文件中 exports 导出的
+- 在 clean-package-json 中添加 sideEffects: false, // 核心：开启 Tree Shaking
+- 维护 clean-package-json 文件中 exports 导出中遗漏 “...exportsList,”
+- 在"发布.yml" 限定 Node 版本添加 “always-auth: false # 强制使用 OIDC 而非令牌“ 并移除 “clean npm auth”
+- 测试目录 eg 而在 tsconfig.json 却是 test
+- 测试打包为 .mjs 但是在 package.json 中使用脚本为 index.js
+- eslint.config.mjs 文件 eslintConfigPrettier 没有与实际引入的变量对应导致 eslint 不工作
+- 调整依赖
 
 ## 1.2.1 (2026-1-31)
 

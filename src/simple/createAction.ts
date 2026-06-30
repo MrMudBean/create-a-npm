@@ -61,12 +61,7 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
-
-      - name: clean npm auth
-        run: |
-          npm config delete //registry.npmjs.org/:_authToken
-          rm -f ~/.npmrc
-        shell: bash
+          always-auth: false
 
             ${
               manager.value === 'pnpm'

@@ -1,4 +1,4 @@
-import { SelectionParamObjectData } from 'a-command';
+import type { SelectionParamObjectData } from '@vvi/command';
 
 /**
  *  向  data 追加数据

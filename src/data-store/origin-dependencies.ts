@@ -1,4 +1,4 @@
-import { Dependencies } from '../types';
+import type { Dependencies } from '../types';
 /**
  * ## 原始依赖数组
  */
