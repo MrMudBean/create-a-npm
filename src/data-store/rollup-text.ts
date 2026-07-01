@@ -8,7 +8,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 07:47
  * @version 1.2.0
- * @lastModified 2026-02-01 01:44
+ * @lastModified 2026-07-01 20:18
  */
 
 import { FileName } from './file-name-enum';
@@ -34,7 +34,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import cleanup from 'rollup-plugin-cleanup';
 import copy from 'rollup-plugin-copy';
-import { external } from '@qqi/rollup-external';
+import { external } from '@vvi/rollup-external';
 ${
   isBin
     ? "import license form 'rollup-plugin-license';\nimport terser from '@rollup/plugin-terser';"
