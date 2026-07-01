@@ -11,7 +11,7 @@ export async function askForWithBin() {
       {
         value: 0,
         label: '仅是可用库',
-        tip: '当前仅是使用的库，譬如：' + greenPen`a-js-tools`,
+        tip: '当前仅是使用的库，譬如：' + greenPen`xcn`,
       },
       {
         value: 1,

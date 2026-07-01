@@ -7,13 +7,12 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 18:44
  * @version 1.1.0
- * @lastModified 2026-06-29 19:39
+ * @lastModified 2026-07-01 15:30
  *
  * 当配置包名时，后自动创建包的工作路径
  */
 import { isNull, isUndefined } from '@vvi/is';
-import type {
-  PackageJson} from '@vvi/node';
+import type { PackageJson } from '@vvi/node';
 import {
   getDirectoryBy,
   initializeFile,
@@ -190,7 +189,7 @@ class DataStore {
 
     const result: Dependency = {};
     /**
-     * 通过一种很二的方式来添加
+     * 通过一种很二的方式来添加（这里其实需要更新的）
      * @param list 依赖数组
      */
     const merge = function (this: Dependency, list: string[]) {
@@ -198,32 +197,53 @@ class DataStore {
       list.forEach(item => (this[item] = devDe?.[item] || deLi[item]));
     }.bind(result);
 
+    /**
+     * !!! 重要 !!!
+     * 未更新当前函数导致依赖丢失
+     */
     merge([
-      '@color-pen/static',
       '@eslint/js',
-      '@qqi/check-version',
-      '@qqi/rollup-external',
       '@rollup/plugin-commonjs',
       '@rollup/plugin-json',
       '@rollup/plugin-node-resolve',
       '@rollup/plugin-terser',
       '@rollup/plugin-typescript',
+      '@types/node',
+      '@vvi/check-version',
+      '@vvi/command',
+      '@vvi/is',
+      '@vvi/log',
+      '@vvi/node',
+      '@vvi/pen',
+      '@vvi/pen-static',
+      '@vvi/rollup-external',
+      '@vvi/table',
+      '@vvi/utils',
+      'eslint',
+      'eslint-config-prettier',
+      'eslint-import-resolver-typescript',
+      'eslint-plugin-import',
+      'eslint-plugin-jsdoc',
+      'eslint-plugin-jsonc',
+      'eslint-plugin-promise',
+      'eslint-plugin-unused-imports',
+      'globals',
       'gvv',
+      'husky',
       'jja',
+      'lint-staged',
       'pjj',
+      'prettier',
+      'qqi',
       'rollup',
       'rollup-plugin-cleanup',
       'rollup-plugin-copy',
+      'rollup-plugin-license',
       'rollup-plugin-typescript2',
+      'tslib',
+      'typescript',
+      'typescript-eslint',
       'vjj',
-      '@qqi/log',
-      'a-command',
-      'a-js-tools',
-      'a-node-tools',
-      'a-type-of-js',
-      'color-pen',
-      'colored-table',
-      'qqi',
     ]);
 
     if (de.includes('husky') && de.includes('prettier')) {

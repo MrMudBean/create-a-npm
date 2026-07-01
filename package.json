@@ -1,7 +1,7 @@
 {
   "name": "create-a-npm",
   "type": "module",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "scripts": {
     "b": "rollup --config rollup.config.js",
     "build": "jja cls rm dist && pnpm run b && node ./scripts/clean-package-json.js",

@@ -16,7 +16,7 @@ export const deLi: Record<string, string>  = {
   "@vvi/rollup-external": "^1.2.2",
   "@vvi/table": "^0.2.2",
   "@vvi/utils": "^2.0.6",
-  "eslint": "^10.6.0",
+  "eslint": "^9.39.4",
   "eslint-config-prettier": "^10.1.8",
   "eslint-import-resolver-typescript": "^4.4.5",
   "eslint-plugin-import": "^2.32.0",
@@ -30,7 +30,7 @@ export const deLi: Record<string, string>  = {
   "jja": "^2.5.2",
   "lint-staged": "^17.0.8",
   "pjj": "^1.0.7",
-  "prettier": "^3.9.2",
+  "prettier": "^3.9.4",
   "qqi": "^1.0.1",
   "rollup": "^4.62.2",
   "rollup-plugin-cleanup": "^3.2.1",
@@ -39,6 +39,6 @@ export const deLi: Record<string, string>  = {
   "rollup-plugin-typescript2": "^0.37.0",
   "tslib": "^2.8.1",
   "typescript": "^6.0.3",
-  "typescript-eslint": "^8.62.0",
+  "typescript-eslint": "^8.62.1",
   "vjj": "^1.0.14"
 }
