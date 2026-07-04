@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-28 12:55
  * @version 1.1.0
- * @lastModified 2026-06-29 19:37
+ * @lastModified 2026-07-04 18:39
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { _p, writeJsonFileSync } from '@vvi/node';
@@ -86,7 +86,7 @@ export function writeToFile(
  */
 export function prettier(kind: WriteToFileKind = 'pkg'): void {
   // 写入 prettier ignore 忽略规则
-  writeToFile(FileName.PRETTIER_IGNORE, gitIgnoreText(), kind);
+  // writeToFile(FileName.PRETTIER_IGNORE, gitIgnoreText(), kind);
 
   writeToFile(FileName.PRETTIER, prettierText(), kind);
 }

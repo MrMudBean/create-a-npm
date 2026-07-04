@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2024-08-30 18:44
  * @version 1.1.0
- * @lastModified 2026-07-01 15:30
+ * @lastModified 2026-07-01 23:08
  *
  * 当配置包名时，后自动创建包的工作路径
  */
@@ -202,13 +202,10 @@ class DataStore {
      * 未更新当前函数导致依赖丢失
      */
     merge([
-      '@eslint/js',
       '@rollup/plugin-commonjs',
       '@rollup/plugin-json',
       '@rollup/plugin-node-resolve',
       '@rollup/plugin-terser',
-      '@rollup/plugin-typescript',
-      '@types/node',
       '@vvi/check-version',
       '@vvi/command',
       '@vvi/is',
@@ -219,21 +216,9 @@ class DataStore {
       '@vvi/rollup-external',
       '@vvi/table',
       '@vvi/utils',
-      'eslint',
-      'eslint-config-prettier',
-      'eslint-import-resolver-typescript',
-      'eslint-plugin-import',
-      'eslint-plugin-jsdoc',
-      'eslint-plugin-jsonc',
-      'eslint-plugin-promise',
-      'eslint-plugin-unused-imports',
-      'globals',
       'gvv',
-      'husky',
       'jja',
-      'lint-staged',
       'pjj',
-      'prettier',
       'qqi',
       'rollup',
       'rollup-plugin-cleanup',
@@ -241,14 +226,17 @@ class DataStore {
       'rollup-plugin-license',
       'rollup-plugin-typescript2',
       'tslib',
-      'typescript',
-      'typescript-eslint',
       'vjj',
     ]);
 
     if (de.includes('husky') && de.includes('prettier')) {
       merge(['husky', 'lint-staged']);
     }
+    // 如果需要 ts
+    if (de.includes('typescript'))
+      merge(['@types/node', '@rollup/plugin-node-resolve', 'typescript']);
+    // 如果需要格式化
+    if (de.includes('prettier')) merge(['prettier']);
 
     if (de.includes('eslint')) {
       merge([
@@ -271,13 +259,6 @@ class DataStore {
       // eslint prettier 支持
       if (de.includes('prettier')) merge(['eslint-config-prettier']);
     }
-
-    // 如果需要格式化
-    if (de.includes('prettier')) merge(['prettier']);
-
-    // 如果需要 ts
-    if (de.includes('typescript'))
-      merge(['@types/node', '@rollup/plugin-node-resolve', 'typescript']);
 
     delete result.merge; // 移除工具函数
     if (dun) {

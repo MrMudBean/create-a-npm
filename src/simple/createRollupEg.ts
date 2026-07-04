@@ -32,11 +32,9 @@ export default {
   plugins: [
     resolve(),
     commonjs(),
-    // 可打包 json 内容
-    json(),
+    json(), // 可打包 json 内容
     ${ts ? 'typescript(),' : ''}
-    // 去除无用代码
-    cleanup(),
+    cleanup(), // 去除无用代码
   ],
 };
   `,

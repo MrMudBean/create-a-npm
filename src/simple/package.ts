@@ -3,7 +3,7 @@ import { dataStore } from '../data-store';
 import { FileName } from '../data-store/file-name-enum';
 import { appendPackageScripts, writeToFile } from '../utils';
 
-/** 生成 package.json 文件内容  */
+/** 生成裸 package.json 文件内容  */
 export function packageJson() {
   const pkgInfo: PackageJson = {
     name: dataStore.name,

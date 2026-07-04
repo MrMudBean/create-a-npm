@@ -12,11 +12,11 @@
  * 该操作出现在命名完成后
  */
 import { askForName } from './ask-for-package-name';
-import { createRange } from './create-range';
-import { createChild } from './createChild';
-import custom from './custom';
-import { dataStore } from './data-store';
-import { packageIndex } from './simple';
+import { createRange } from './create-range/index';
+import { createChild } from './createChild/index';
+import custom from './custom/index';
+import { dataStore } from './data-store/index';
+import { packageIndex } from './simple/index';
 import { dog } from './utils/dog';
 
 /**

@@ -21,7 +21,6 @@ import { createRollupEg } from './createRollupEg';
 import { packageJson } from './package';
 
 /**
- *
  * 导出 package 的主文件
  */
 export function packageIndex() {

@@ -16,7 +16,7 @@ import {
   magentaPen,
 } from '@vvi/pen';
 import { askForName } from './ask-for-package-name';
-import { createNpm } from './createNpm';
+import { createNpm } from './create-npm';
 import custom from './custom';
 import { dataStore } from './data-store';
 import { commandParameters } from './data-store/command-parameters';

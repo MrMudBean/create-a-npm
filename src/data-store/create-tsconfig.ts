@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 16:38
  * @version 1.2.0
- * @lastModified 2026-07-01 01:42
+ * @lastModified 2026-07-01 22:47
  */
 
 import { FileName } from './file-name-enum';
@@ -62,10 +62,10 @@ export function createTsconfigTypeText() {
   }",
   "compilerOptions": {
     "declaration": true, // 生成类型文件
-    "declarationDir": "dist",
+    "declarationDir": "dist/es",
     "emitDeclarationOnly": true,
     "noEmit": false,
-    "rootDir": "."
+    "rootDir": "src"
   },
   "include": ["src/"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "eg", "jest.setup.ts" , "scripts/"]
