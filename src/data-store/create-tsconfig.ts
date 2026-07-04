@@ -7,7 +7,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 16:38
  * @version 1.2.0
- * @lastModified 2026-07-01 22:47
+ * @lastModified 2026-07-05 07:28
  */
 
 import { FileName } from './file-name-enum';
@@ -23,7 +23,6 @@ export function createTsconfigBaseText() {
         "allowSyntheticDefaultImports": true, // 设定为 true 时，模块没有指定显式的默认导出，允许 \`import React from "react";\` 而不是 \`import * as React from "react";\`
         "declaration": false, // 生成 .d.ts 类型声明文件
         // "declarationDir": "dist", // 类型声明文件输出目录
-        "downlevelIteration": true, // 迭代器降级
         "esModuleInterop": true, // 兼容 CommonJS/ES Module
         "experimentalDecorators": true, // 启用装饰器
         "forceConsistentCasingInFileNames": true, // 机器适配

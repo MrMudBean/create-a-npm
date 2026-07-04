@@ -2,6 +2,14 @@
 
 !!! 更新依赖后需注意在 [buildDevDependencies](./src/data-store/index.ts) 方法更新返回值
 
+## 1.3.1 (2026-7-5)
+
+移除 tsconfig.json `compilerOptions.downlevelIteration` 。该属性将在未来版本被移除。
+
+```tex
+Option 'downlevelIteration' has been removed. Please remove it from your configuration.ts(5102)
+```
+
 ## 1.3.0 (2026-7-1)
 
 - 修改 `tsconfig.types.json` 导出文件（ declarationDir ）路径及根（ rootDir ）
