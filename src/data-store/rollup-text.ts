@@ -8,7 +8,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 07:47
  * @version 1.2.0
- * @lastModified 2026-07-01 20:18
+ * @lastModified 2026-07-05 07:41
  */
 
 import { FileName } from './file-name-enum';
@@ -88,8 +88,7 @@ export default {
     }
     copy({
       targets: [
-        { src: 'README.md', dest: 'dist' },
-        { src: 'LICENSE', dest: 'dist' },
+        { src: ['README.md', 'LICENSE', 'CHANGELOG.md'], dest: 'dist' },
       ],
     }),${
       isBin

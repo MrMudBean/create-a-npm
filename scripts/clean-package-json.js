@@ -23,7 +23,13 @@ packageJson = {
   },
   description: '一个简单的代码模板库',
   license: 'MIT',
-  files: ['bin.js', 'LICENSE', 'README.md', 'THIRD-PARTY-LICENSES.txt'],
+  files: [
+    'bin.js',
+    'LICENSE',
+    'README.md',
+    'THIRD-PARTY-LICENSES.txt',
+    'CHANGELOG.md',
+  ],
   keywords: ['crate-a-npm', 'create-a-pkg', 'crate a npm'],
   homepage: 'https://earthnut.dev/npm/create-a-npm',
   bugs: {
