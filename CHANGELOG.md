@@ -5,6 +5,7 @@
 ## 1.3.2 (2026-7-5)
 
 - 更新了 `rollup.config.js` 中 copy 文本的值。
+- 更新 `rollup.config.eg.js` 引入
 
 ## 1.3.1 (2026-7-5)
 
