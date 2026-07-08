@@ -2,10 +2,14 @@
 
 !!! 更新依赖后需注意在 [buildDevDependencies](./src/data-store/index.ts) 方法更新返回值
 
+## 1.3.3 (2026-7-8)
+
+- 维护信息
+
 ## 1.3.2 (2026-7-5)
 
 - 更新了 `rollup.config.js` 中 copy 文本的值。
-- 更新 `rollup.config.eg.js` 引入
+- 更替 `rollup.config.eg.js` 引入 `''`
 
 ## 1.3.1 (2026-7-5)
 

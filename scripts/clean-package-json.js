@@ -19,7 +19,7 @@ packageJson = {
   author: {
     name: '泥豆君',
     email: 'Mr.MudBean@outlook.com',
-    url: 'https://earthnut.dev',
+    url: 'https://mudbean.cn',
   },
   description: '一个简单的代码模板库',
   license: 'MIT',
@@ -30,8 +30,8 @@ packageJson = {
     'THIRD-PARTY-LICENSES.txt',
     'CHANGELOG.md',
   ],
-  keywords: ['crate-a-npm', 'create-a-pkg', 'crate a npm'],
-  homepage: 'https://earthnut.dev/npm/create-a-npm',
+  keywords: ['crate a npm', 'mudbean', 'vvi'],
+  homepage: 'https://npm.lmssee.com/create-a-npm',
   bugs: {
     url: 'https://github.com/MrMudBean/create-a-npm/issues',
     email: 'Mr.MudBean@outlook.com',
