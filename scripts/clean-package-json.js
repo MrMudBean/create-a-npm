@@ -10,7 +10,10 @@ if (isNull(packageJsonResponse)) {
 
 let packageJson = packageJsonResponse.content;
 // 移除冗余的键
-['scripts', 'lint-staged', 'private', 'dependencies'].forEach(
+[
+  'scripts', 'lint-staged', 'private', 'dependencies','jja','type','packageManager'
+
+].forEach(
   key => delete packageJson[key],
 );
 

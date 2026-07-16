@@ -2,6 +2,14 @@
 
 !!! 更新依赖后需注意在 [buildDevDependencies](./src/data-store/index.ts) 方法更新返回值
 
+## 1.3.4 (2026-7-16)
+
+- 维护依赖的版本信息
+- 移除构建后 `package.json` 文件的 type 属性
+- 移除构建后 `package.json` 文件的 module 属性
+- 添加 `package.json` 的 jja 属性
+- 维护生成 `clean-package-json.js` 文件引入方法的顺序，更符合 eslint `import/order` 的规则
+
 ## 1.3.3 (2026-7-8)
 
 - 维护信息

@@ -233,8 +233,9 @@ class DataStore {
       merge(['husky', 'lint-staged']);
     }
     // 如果需要 ts
-    if (de.includes('typescript'))
+    if (de.includes('typescript')) {
       merge(['@types/node', '@rollup/plugin-node-resolve', 'typescript']);
+    }
     // 如果需要格式化
     if (de.includes('prettier')) merge(['prettier']);
 

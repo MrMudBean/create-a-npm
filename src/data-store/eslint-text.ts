@@ -124,7 +124,7 @@ export default [
         'error',
         {
           prefer: 'type-imports',
-          disallowTypeAnnotations: false, // 禁用 在单个 import 中混合值与类型
+          disallowTypeAnnotations: true, // 禁用 在单个 import 中混合值与类型
           fixStyle: 'inline-type-imports',
         },
       ],

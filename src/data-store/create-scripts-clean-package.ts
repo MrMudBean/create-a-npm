@@ -8,7 +8,7 @@
  * @copyright 2026 ©️ MrMudBean
  * @since 2026-01-30 08:09
  * @version 1.2.0
- * @lastModified 2026-07-01 01:12
+ * @lastModified 2026-07-16 13:00
  */
 
 import { mkdirSync } from 'node:fs';
@@ -23,7 +23,12 @@ export function createScriptCleanPackage() {
   const nameList = dataStore.name.replace(/^@/, '').split('/');
   const name = nameList[0]; // 包名
   const { bin } = dataStore;
-  return `import {
+  return `${
+  bin !== 1
+    ? `import { readdirSync } from 'node:fs';
+import { basename, extname } from 'node:path';\n`
+    : ''
+}import {
   pathJoin,
   readFileToJsonSync,
   writeJsonFileSync,
@@ -34,12 +39,7 @@ export function createScriptCleanPackage() {
       : ''
   }
 } from '@vvi/node';
-${
-  bin !== 1
-    ? `import { readdirSync } from 'node:fs';
-import { basename, extname } from 'node:path';`
-    : ''
-}
+
 
 // 原始 package.json 内容
 let packageJson = readFileToJsonSync('./package.json');
@@ -52,6 +52,8 @@ const dependencies = packageJson.dependencies;
   'private',
   'dependencies',
   'packageManager',
+  'jja',
+  'type'
 ].forEach(key => delete packageJson[key]);
   ${
     bin !== 1
@@ -125,7 +127,6 @@ packageJson = {
     // 当非完全执行库
     bin !== 1
       ? `  main: cjsPrefix + '/index.js', // 旧版本 CommonJs 入口
-  module: esPrefix + '/index.js', // 旧版本 ESM 入口
   types: dtsPrefix + '/index.d.ts', // 旧版本类型入口`
       : ''
   }

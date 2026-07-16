@@ -2,3 +2,4 @@ node_modules
 dist
 .eg
 .DS_Store
+test
